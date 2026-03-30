@@ -31,6 +31,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'img.rocket.new',
       },
+      // Haru Circle Home 6 theme demo assets (static mirror)
+      {
+        protocol: 'https',
+        hostname: 'demo.harutheme.com',
+      },
       // Strapi CMS (News Portal - article covers, ad slots)
       {
         protocol: 'http',

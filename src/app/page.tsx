@@ -1,17 +1,16 @@
-import FcUnitedHomePage from '@/components/fc-united/FcUnitedHomePage';
+import CircleHome6Page from '@/components/circle-home-6/CircleHome6Page';
 
 /**
- * Home route: static FC United mirror (wget index) styled per
- * `design_systems/mdStrikers_site_general_design_final.json`.
+ * Home route: static Haru Circle “Home 6” mirror (Tailwind), based on
+ * `primary_theme/demo.harutheme.com/circle/home-6/index.html`.
+ * No backend / proxy calls — demo images load from demo.harutheme.com CDN.
  *
- * Previous implementation (dynamic featured events + HomePageClient) is kept in:
+ * Previous FC United static home: `/fc-united` (see `src/app/fc-united/page.tsx`).
+ *
+ * Older dynamic featured-events home is kept in:
  * - `src/app/HomePageClient.tsx`
  * - `src/lib/homepage/fetchFeaturedEventsServer.ts`
- * Re-enable by restoring an async page that calls `fetchFeaturedEventsForHomepageServer`
- * and renders `<HomePageClient initialFeaturedEvents={...} />`.
- *
- * Backend event catalog: `/browse-events` (moved from `/events` for FC United static pages).
  */
 export default function HomePage() {
-  return <FcUnitedHomePage />;
+  return <CircleHome6Page />;
 }

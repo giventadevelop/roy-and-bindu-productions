@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Facebook, Linkedin, Youtube, ArrowUp, Mail, Phone, MapPin } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useTenantSettings } from "@/components/TenantSettingsProvider";
+import GiventaCreditLines from "@/components/GiventaCreditLines";
 
 // Back-to-top button component with comprehensive styling
 const BackToTopButton = () => {
@@ -310,7 +311,7 @@ const Footer = () => {
               .<span className="block md:inline"> All rights reserved.</span> Making hope happen.
             </p>
 
-            <nav className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6">
+            <nav className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6" aria-label="Legal">
               <Link
                 href="#privacy"
                 className="text-gray-400 hover:text-white font-inter text-sm transition-colors duration-300 focus:outline-none focus:text-white"
@@ -330,6 +331,10 @@ const Footer = () => {
                 Accessibility
               </Link>
             </nav>
+          </div>
+
+          <div className="mt-6 border-t border-gray-800 pt-6 text-center font-inter text-xs leading-relaxed text-gray-400">
+            <GiventaCreditLines variant="footerGray" />
           </div>
         </div>
       </div>

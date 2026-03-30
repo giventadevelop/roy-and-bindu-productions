@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from 'react';
+import GiventaCreditLines from '@/components/GiventaCreditLines';
 
 export function Footer() {
   useEffect(() => {
@@ -88,6 +89,9 @@ export function Footer() {
             <div className="text-gray-300 text-sm opacity-80">
               © <span id="currentYear">2025</span> MCEFEE. All rights reserved.
             </div>
+          </div>
+          <div className="mx-auto mt-6 max-w-7xl border-t border-gray-700 pt-6 text-center text-xs leading-relaxed text-gray-400">
+            <GiventaCreditLines variant="footerGray" />
           </div>
         </div>
       </div>

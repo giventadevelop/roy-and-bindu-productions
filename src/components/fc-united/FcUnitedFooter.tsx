@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { fcBebas } from './fcUnitedFonts';
 import { mdStrikersBrand as b } from './mdStrikersBrand';
+import GiventaCreditLines from '@/components/GiventaCreditLines';
 
 function Shell({ children, className }: { children: ReactNode; className?: string }) {
   return (
@@ -41,8 +42,8 @@ export function FcUnitedFooter() {
           </div>
           <div className="my-8 h-0.5 bg-white/[0.08]" />
         </div>
-        <div className="flex flex-col flex-wrap items-start justify-between gap-4 border-t border-white/10 pt-8 text-sm md:flex-row md:items-center">
-          <div className="flex flex-wrap gap-5">
+        <div className="border-t border-white/10 pt-8 text-sm">
+          <div className="flex flex-wrap justify-center gap-5">
             <Link href="/" className="font-medium text-white transition-colors hover:text-[#e31837]">
               Home
             </Link>
@@ -62,17 +63,9 @@ export function FcUnitedFooter() {
               Contacts
             </Link>
           </div>
-          <p className="text-xs text-[#848992]">
-            Powered and designed by{' '}
-            <a
-              href="https://www.giventa.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-medium text-[#848992] underline-offset-2 transition-colors hover:text-white hover:underline"
-            >
-              Giventa Inc. USA
-            </a>
-          </p>
+          <div className="mt-8 text-center text-xs text-[#848992]">
+            <GiventaCreditLines variant="fcUnited" />
+          </div>
         </div>
       </Shell>
     </footer>

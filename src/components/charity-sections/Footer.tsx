@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Facebook, Twitter, Linkedin, Youtube, ArrowUp, Mail, Phone, MapPin } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import GiventaCreditLines from "@/components/GiventaCreditLines";
 
 // Back-to-top button component with comprehensive styling
 const BackToTopButton = () => {
@@ -343,6 +344,10 @@ const Footer = () => {
                 Accessibility
               </Link>
             </nav>
+          </div>
+
+          <div className="mt-6 border-t border-gray-800 pt-6 text-center font-inter text-xs leading-relaxed text-gray-400">
+            <GiventaCreditLines variant="footerGray" />
           </div>
         </div>
       </div>

@@ -33,16 +33,16 @@ export function FcUnitedHeader({ active }: { active?: FcNavKey }) {
       className="md-strikers-header relative z-50 border-b border-white/[0.06] text-[var(--md-text-muted)] shadow-[0_4px_24px_rgba(0,0,0,0.35)] backdrop-blur-sm"
       style={headerStyle}
     >
-      <Shell className="flex min-h-[calc(3.25rem+45px+1.5rem)] items-center justify-between gap-3 py-3 sm:min-h-[calc(4rem+45px+1.5rem)] sm:gap-5 sm:py-3.5 md:min-h-[calc(4.5rem+45px+1.75rem)] md:gap-6 lg:min-h-[calc(5.25rem+45px+1.75rem)] xl:min-h-[calc(5.75rem+45px+1.75rem)]">
+      <Shell className="flex min-h-[calc(3.25rem+1.5rem)] items-center justify-between gap-3 py-3 sm:min-h-[calc(4rem+1.5rem)] sm:gap-5 sm:py-3.5 md:min-h-[calc(4.5rem+1.75rem)] md:gap-6 lg:min-h-[calc(5.25rem+1.75rem)] xl:min-h-[calc(5.75rem+1.75rem)]">
         <Link
           href="/"
           className="group flex min-w-0 flex-1 items-center gap-2.5 sm:gap-3 md:gap-4 lg:gap-5"
           aria-label="Maryland Strikers — Home"
         >
-          <div className="relative flex h-[calc(3.25rem+45px)] w-[calc(3.25rem+45px)] flex-shrink-0 items-center justify-center sm:h-[calc(4rem+45px)] sm:w-[calc(4rem+45px)] md:h-[calc(4.5rem+45px)] md:w-[calc(4.5rem+45px)] lg:h-[calc(5.25rem+45px)] lg:w-[calc(5.25rem+45px)] xl:h-[calc(5.75rem+45px)] xl:w-[calc(5.75rem+45px)]">
+          <div className="relative flex h-[3.25rem] w-[3.25rem] flex-shrink-0 items-center justify-center sm:h-16 sm:w-16 md:h-[4.5rem] md:w-[4.5rem] lg:h-[5.25rem] lg:w-[5.25rem] xl:h-[5.75rem] xl:w-[5.75rem]">
             <Image
-              src="/images/md_strikers_media/md_media/md_strikers_logo-withoutBackground.png"
-              alt=""
+              src="/images/logo/roy_and_bindu_prod_logo_transparent.png"
+              alt="Roy and Bindu Productions"
               width={280}
               height={280}
               sizes="(max-width: 640px) 160px, (max-width: 768px) 176px, (max-width: 1024px) 192px, 236px"
