@@ -5,7 +5,13 @@ import CircleHome6TrailersClient from './CircleHome6TrailersClient';
 import CircleHome6Header from './CircleHome6Header';
 import CircleHome6AboutSection from './CircleHome6AboutSection';
 import GiventaCreditLines from '@/components/GiventaCreditLines';
-import { RB_HERO_POSTER_JPG, VIDEO_BRISBANE_THUMBNAIL_JPG } from './rbHeroMedia';
+import {
+  MOVIE_POSTER_RECREATED_1_JPG,
+  MOVIE_POSTER_RECREATED_2_JPG,
+  MOVIE_POSTER_RECREATED_3_JPG,
+  RB_HERO_POSTER_JPG,
+  VIDEO_BRISBANE_THUMBNAIL_JPG,
+} from './rbHeroMedia';
 
 const nunito = Nunito_Sans({
   subsets: ['latin'],
@@ -21,13 +27,11 @@ const playfair = Playfair_Display({
 /** Demo CDN — theme snapshot has no local wp-content/uploads; mirror uses live demo URLs. */
 const U = 'https://demo.harutheme.com/circle/wp-content/uploads';
 
+/** Current Projects strip — three posters only. */
 const NOW_PLAYING = [
-  { src: `${U}/2017/08/wynonna.jpg`, title: 'Wynonna', rating: '8.7', cats: 'Action / Drama', label: 'Hot' as const },
-  { src: `${U}/2017/08/war-is-coming.jpg`, title: 'War is Coming', rating: '8.7', cats: 'Comedy / Historycal', label: 'Trend' as const },
-  { src: `${U}/2017/08/red-sonja.jpg`, title: 'Red Sonja', rating: '8.7', cats: 'Comedy / Drama' },
-  { src: `${U}/2017/08/drive-angry.jpg`, title: 'Drive Angry', rating: '8.7', cats: 'Action / Historycal' },
-  { src: `${U}/2017/08/eiskonigin.jpg`, title: 'Last Christmas', rating: '8.7', cats: 'Comedy / Drama', label: 'New' as const },
-  { src: `${U}/2017/08/better-call-saul.jpg`, title: 'Film Studio', rating: '8.7', cats: 'Comedy / Drama' },
+  { src: MOVIE_POSTER_RECREATED_1_JPG, title: 'Wynonna', rating: '8.7', cats: 'Action / Drama', label: 'Hot' as const },
+  { src: MOVIE_POSTER_RECREATED_2_JPG, title: 'War is Coming', rating: '8.7', cats: 'Comedy / Historycal', label: 'Trend' as const },
+  { src: MOVIE_POSTER_RECREATED_3_JPG, title: 'Red Sonja', rating: '8.7', cats: 'Comedy / Drama' },
 ];
 
 const THEATER = [
@@ -41,6 +45,7 @@ const THEATER = [
   { src: `${U}/2017/08/leaf.jpg`, title: 'Leaf', rating: '8.0' },
 ];
 
+/** Trailers strip: only two thumbnail buttons (matches section Trailers UI). */
 const TRAILERS = [
   {
     img: VIDEO_BRISBANE_THUMBNAIL_JPG,
@@ -48,9 +53,6 @@ const TRAILERS = [
     cats: 'R&B Productions',
   },
   { img: `${U}/2017/08/trailer-wonder-2.jpg`, title: 'Awesome Film Maker', cats: 'Action / Horror' },
-  { img: `${U}/2017/08/trailer-joog-boo.jpg`, title: 'Leap', cats: 'Action / Comedy' },
-  { img: `${U}/2017/08/trailer-beauty-and-monster.jpg`, title: 'Seventeenth Summer', cats: 'Comedy / Historycal' },
-  { img: `${U}/2017/08/trailer-brave.jpg`, title: 'A message to Space', cats: 'Drama / Horror' },
 ];
 
 const CELEBS = [
@@ -61,16 +63,26 @@ const CELEBS = [
   { thumb: `${U}/2017/07/austin-aguilar.jpg`, name: 'Diana Angel', views: '345 views', role: 'Actor' },
 ];
 
-function SectionHead({ title, rightHref = '#' }: { title: string; rightHref?: string }) {
+function SectionHead({
+  title,
+  rightHref = '#',
+  showViewAll = true,
+}: {
+  title: string;
+  rightHref?: string;
+  showViewAll?: boolean;
+}) {
   return (
     <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <h2 className={`${playfair.className} text-2xl text-white sm:text-3xl`}>{title}</h2>
-      <Link
-        href={rightHref}
-        className="self-start rounded-full border border-white/40 px-5 py-2 text-sm font-semibold text-white/90 transition hover:border-[#fd6500] hover:text-[#fd6500] sm:self-auto"
-      >
-        View all
-      </Link>
+      {showViewAll && (
+        <Link
+          href={rightHref}
+          className="self-start rounded-full border border-white/40 px-5 py-2 text-sm font-semibold text-white/90 transition hover:border-[#fd6500] hover:text-[#fd6500] sm:self-auto"
+        >
+          View all
+        </Link>
+      )}
     </div>
   );
 }
@@ -171,7 +183,7 @@ export default function CircleHome6Page() {
       <CircleHome6Header />
 
       {/* Hero — public/images/Roy_and_Bindhu_hero_movie_section/roy_bindu_hero_image.jpg */}
-      <section className="relative min-h-[min(85vh,680px)] w-full overflow-hidden">
+      <section className="relative min-h-[min(88vh,740px)] w-full overflow-hidden">
         <Image
           src={RB_HERO_POSTER_JPG}
           alt="R&B Productions — Roy and Bindu"
@@ -180,7 +192,7 @@ export default function CircleHome6Page() {
           className="object-cover object-center"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#161616] via-black/50 to-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#161616]/55 via-black/18 to-black/5" />
         <div className="absolute bottom-0 left-0 z-10 max-w-4xl px-4 pb-10 pt-8 text-left lg:px-8 lg:pb-14">
           <p className={`${playfair.className} text-2xl font-semibold leading-snug text-white sm:text-3xl md:text-4xl`}>
             An initiative by Roy and Bindu
@@ -195,10 +207,10 @@ export default function CircleHome6Page() {
 
       <CircleHome6AboutSection />
 
-      {/* Now Playing */}
+      {/* Current Projects */}
       <section className="border-t border-white/5 bg-[#1e1e1e] py-14">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <SectionHead title="Now Playing" />
+          <SectionHead title="Current Projects" showViewAll={false} />
           <div className="-mx-4 flex gap-6 overflow-x-auto pb-4 pl-4 pr-4 scrollbar-thin lg:mx-0 lg:pl-0">
             {NOW_PLAYING.map((f) => (
               <FilmPoster key={f.title} {...f} />
@@ -207,23 +219,12 @@ export default function CircleHome6Page() {
         </div>
       </section>
 
-      {/* Download app */}
-      <section className="border-t border-white/5 bg-gradient-to-r from-[#1e1e1e] via-[#252525] to-[#1e1e1e] py-12">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 px-4 md:flex-row lg:px-8">
-          <p className={`${playfair.className} text-center text-2xl text-white md:text-left md:text-3xl`}>Download Circle App</p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <span className="rounded-full border border-white/40 px-8 py-3 text-sm font-semibold">Download for IOS</span>
-            <span className="rounded-full border border-white/40 px-8 py-3 text-sm font-semibold">For Android</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Movies in theater + sidebar */}
-      <section className="border-t border-white/5 bg-[#232323] py-14">
+      {/* Movies in theater + sidebar — hidden (restore: remove `hidden` from className) */}
+      <section className="hidden border-t border-white/5 bg-[#232323] py-14">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-8">
-              <SectionHead title="Movies in theater" />
+              <SectionHead title="Movies in theater" showViewAll={false} />
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
                 {THEATER.map((f) => (
                   <FilmGridCard key={f.title + f.src} {...f} />
@@ -262,7 +263,7 @@ export default function CircleHome6Page() {
       {/* Trailers */}
       <section className="border-t border-white/5 bg-[#1a1a1a] py-14">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <SectionHead title="Trailers & Videos" />
+          <SectionHead title="Trailers & Videos" showViewAll={false} />
           <CircleHome6TrailersClient trailers={TRAILERS} playfairClassName={playfair.className} />
         </div>
       </section>
@@ -272,9 +273,9 @@ export default function CircleHome6Page() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="grid gap-10 lg:grid-cols-12">
             <div className="lg:col-span-8">
-              <SectionHead title="Film Series" />
+              <SectionHead title="Film Series" showViewAll={false} />
               <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-                {THEATER.slice(0, 8).map((f) => (
+                {THEATER.slice(0, 3).map((f) => (
                   <FilmGridCard key={`series-${f.title}`} {...f} />
                 ))}
               </div>
@@ -313,12 +314,8 @@ export default function CircleHome6Page() {
 
       {/* CTA */}
       <section className="border-t border-white/5 bg-gradient-to-br from-[#2a1810]/90 via-[#161616] to-[#0f0f0f] py-16">
-        <div className="mx-auto flex max-w-7xl flex-col items-center gap-8 px-4 text-center lg:flex-row lg:justify-between lg:text-left lg:px-8">
-          <h2 className={`${playfair.className} max-w-xl text-2xl text-white md:text-3xl`}>Let&apos;s make great things together!</h2>
-          <div className="flex flex-wrap justify-center gap-4">
-            <span className="rounded-full border border-white/50 px-8 py-3 text-sm font-semibold text-white">View More</span>
-            <span className="rounded-full bg-[#fd6500] px-8 py-3 text-sm font-bold text-white">Donate Now</span>
-          </div>
+        <div className="mx-auto max-w-7xl px-4 text-center lg:px-8">
+          <h2 className={`${playfair.className} mx-auto max-w-xl text-2xl text-white md:text-3xl`}>Let&apos;s make great things together!</h2>
         </div>
       </section>
 
