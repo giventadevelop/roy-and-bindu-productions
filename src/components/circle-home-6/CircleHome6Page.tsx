@@ -6,6 +6,7 @@ import CircleHome6Header from './CircleHome6Header';
 import CircleHome6AboutSection from './CircleHome6AboutSection';
 import GiventaCreditLines from '@/components/GiventaCreditLines';
 import {
+  LOGO_SUBTITLE_WHITE_WITH_TAGLINE_JPG,
   MOVIE_POSTER_RECREATED_1_JPG,
   MOVIE_POSTER_RECREATED_2_JPG,
   MOVIE_POSTER_RECREATED_3_JPG,
@@ -345,6 +346,16 @@ export default function CircleHome6Page() {
               <li>Instagram</li>
             </ul>
           </div>
+        </div>
+        <div className="mx-auto flex justify-center px-4 pb-2 pt-10 lg:px-8">
+          <Image
+            src={LOGO_SUBTITLE_WHITE_WITH_TAGLINE_JPG}
+            alt="R&amp;B Productions"
+            width={960}
+            height={240}
+            className="h-auto w-full max-w-3xl object-contain"
+            sizes="(max-width: 768px) 100vw, 48rem"
+          />
         </div>
         <div className="mx-auto mt-12 max-w-7xl border-t border-white/10 px-4 pt-8 text-center lg:px-8 lg:text-left">
           <p className="text-sm italic text-[#ababab]">

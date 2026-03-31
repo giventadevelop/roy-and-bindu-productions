@@ -8,6 +8,9 @@ export const BRISBANE_INAUGURATION_MP4 = `${RB_HERO_MEDIA_BASE}/brisbane_inaugur
 
 export const RB_HERO_POSTER_JPG = `${RB_HERO_MEDIA_BASE}/roy_bindu_hero_image.jpg`;
 
+/** White logo with tagline for footer / page bottom. */
+export const LOGO_SUBTITLE_WHITE_WITH_TAGLINE_JPG = `${RB_HERO_MEDIA_BASE}/logo_sub_title_white_with_tagline.jpg`;
+
 /** Thumbnail for the Brisbane video in Trailers & Videos (first strip item). */
 export const VIDEO_BRISBANE_THUMBNAIL_JPG = `${RB_HERO_MEDIA_BASE}/video_brisbane_thumbnail.jpg`;
 
