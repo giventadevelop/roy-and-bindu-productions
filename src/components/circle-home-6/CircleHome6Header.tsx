@@ -2,15 +2,21 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 
 const navLinkBase =
   'rounded-lg px-3 py-2.5 text-sm font-medium transition hover:bg-white/5 hover:text-[#fd6500]';
-const navLinkActive = 'text-[#fd6500]';
-const navLinkMuted = 'cursor-default text-white/40';
+const navLinkActive = 'font-extrabold text-[#ff7a1a]';
+const navLinkInactive = 'text-white';
 
 export default function CircleHome6Header() {
+  const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  const homeActive = pathname === '/';
+  const aboutActive = pathname === '/about';
+  const filmsActive = pathname === '/films';
 
   const close = useCallback(() => setOpen(false), []);
   const toggle = useCallback(() => setOpen((o) => !o), []);
@@ -56,17 +62,14 @@ export default function CircleHome6Header() {
           className="hidden items-center gap-x-6 text-sm font-medium text-white/80 md:flex"
           aria-label="Main navigation"
         >
-          <Link href="/" className={`${navLinkBase} ${navLinkActive}`}>
+          <Link href="/" className={`${navLinkBase} ${homeActive ? navLinkActive : navLinkInactive}`}>
             Home
           </Link>
-          <Link href="/about" className={`${navLinkBase} text-white/80`}>
+          <Link href="/about" className={`${navLinkBase} ${aboutActive ? navLinkActive : navLinkInactive}`}>
             About
           </Link>
-          <span className={`${navLinkBase} ${navLinkMuted}`}>Films</span>
-          <span className={`${navLinkBase} ${navLinkMuted}`}>Series</span>
-          <span className={`${navLinkBase} ${navLinkMuted}`}>Trailers</span>
-          <Link href="/events" className={`${navLinkBase} text-white/80`}>
-            Events
+          <Link href="/films" className={`${navLinkBase} ${filmsActive ? navLinkActive : navLinkInactive}`}>
+            Films
           </Link>
         </nav>
 
@@ -100,21 +103,22 @@ export default function CircleHome6Header() {
         aria-label="Mobile navigation"
       >
         <nav className="mx-auto flex max-w-7xl flex-col px-4 py-3 pb-5" aria-label="Mobile main navigation">
-          <Link
-            href="/"
-            className={`${navLinkBase} ${navLinkActive}`}
-            onClick={close}
-          >
+          <Link href="/" className={`${navLinkBase} ${homeActive ? navLinkActive : navLinkInactive}`} onClick={close}>
             Home
           </Link>
-          <Link href="/about" className={`${navLinkBase} text-white/90`} onClick={close}>
+          <Link
+            href="/about"
+            className={`${navLinkBase} ${aboutActive ? navLinkActive : navLinkInactive}`}
+            onClick={close}
+          >
             About
           </Link>
-          <span className={`${navLinkBase} ${navLinkMuted}`}>Films</span>
-          <span className={`${navLinkBase} ${navLinkMuted}`}>Series</span>
-          <span className={`${navLinkBase} ${navLinkMuted}`}>Trailers</span>
-          <Link href="/events" className={`${navLinkBase} text-white/90`} onClick={close}>
-            Events
+          <Link
+            href="/films"
+            className={`${navLinkBase} ${filmsActive ? navLinkActive : navLinkInactive}`}
+            onClick={close}
+          >
+            Films
           </Link>
         </nav>
       </div>
