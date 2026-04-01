@@ -12,6 +12,7 @@ interface ConditionalLayoutProps {
 const FC_UNITED_FULL_WIDTH = [
   '/',
   '/about',
+  '/films',
   '/events',
   '/matches',
   '/team',

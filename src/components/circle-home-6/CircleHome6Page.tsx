@@ -4,12 +4,15 @@ import { Nunito_Sans, Playfair_Display } from 'next/font/google';
 import CircleHome6TrailersClient from './CircleHome6TrailersClient';
 import CircleHome6Header from './CircleHome6Header';
 import CircleHome6AboutSection from './CircleHome6AboutSection';
+import { CircleHome6HeroVideo } from './CircleHome6HeroVideo';
 import GiventaCreditLines from '@/components/GiventaCreditLines';
 import {
-  LOGO_SUBTITLE_WHITE_WITH_TAGLINE_JPG,
+  LOGO_WITH_WHITE_TAGLINE_PNG,
   MOVIE_POSTER_RECREATED_1_JPG,
   MOVIE_POSTER_RECREATED_2_JPG,
   MOVIE_POSTER_RECREATED_3_JPG,
+  MOVIE_POSTER_RECREATED_4_JPG,
+  RB_HERO_LOOP_MP4,
   RB_HERO_POSTER_JPG,
   VIDEO_BRISBANE_THUMBNAIL_JPG,
 } from './rbHeroMedia';
@@ -28,6 +31,13 @@ const playfair = Playfair_Display({
 /** Demo CDN — theme snapshot has no local wp-content/uploads; mirror uses live demo URLs. */
 const U = 'https://demo.harutheme.com/circle/wp-content/uploads';
 
+/** Shared CSS filters for leadership card photos (Roy, Bindu). */
+const LEADERSHIP_PHOTO_ENHANCE = 'brightness-[1.15] contrast-[1.06] saturate-[1.04]';
+
+/** Stronger lift for Nadirshah photo (3rd card) — darker source exposure. */
+const LEADERSHIP_PHOTO_ENHANCE_NADIRSHAH =
+  'brightness-[1.28] contrast-[1.07] saturate-[1.05]';
+
 /** Current Projects strip — three posters only. */
 const NOW_PLAYING = [
   { src: MOVIE_POSTER_RECREATED_1_JPG, title: 'Wynonna', rating: '8.7', cats: 'Action / Drama', label: 'Hot' as const },
@@ -36,7 +46,7 @@ const NOW_PLAYING = [
 ];
 
 const THEATER = [
-  { src: `${U}/2017/08/wynonna.jpg`, title: 'Wynonna', rating: '8.7', label: 'Hot' as const },
+  { src: MOVIE_POSTER_RECREATED_4_JPG, title: 'Wynonna', rating: '8.7', label: 'Hot' as const },
   { src: `${U}/2017/08/war-is-coming.jpg`, title: 'War is Coming', rating: '8.7', label: 'Trend' as const },
   { src: `${U}/2017/08/red-sonja.jpg`, title: 'Red Sonja', rating: '8.7' },
   { src: `${U}/2017/08/drive-angry.jpg`, title: 'Drive Angry', rating: '8.7' },
@@ -183,17 +193,16 @@ export default function CircleHome6Page() {
     >
       <CircleHome6Header />
 
-      {/* Hero — public/images/Roy_and_Bindhu_hero_movie_section/roy_bindu_hero_image.jpg */}
-      <section className="relative min-h-[min(88vh,740px)] w-full overflow-hidden">
-        <Image
-          src={RB_HERO_POSTER_JPG}
-          alt="R&B Productions — Roy and Bindu"
-          fill
-          priority
-          className="object-cover object-center"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#161616]/55 via-black/18 to-black/5" />
+      {/* Hero — 16:9 box (encode target); object-contain shows full frame — no head crop from object-cover */}
+      <section className="relative w-full overflow-hidden bg-[#161616]">
+        <div className="relative aspect-video w-full">
+          <CircleHome6HeroVideo
+            src={RB_HERO_LOOP_MP4}
+            poster={RB_HERO_POSTER_JPG}
+            className="absolute inset-0 h-full w-full bg-[#161616] object-contain object-center"
+          />
+        </div>
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#161616]/55 via-black/18 to-black/5" />
         <div className="absolute bottom-0 left-0 z-10 max-w-4xl px-4 pb-10 pt-8 text-left lg:px-8 lg:pb-14">
           <p className={`${playfair.className} text-2xl font-semibold leading-snug text-white sm:text-3xl md:text-4xl`}>
             An initiative by Roy and Bindu
@@ -202,6 +211,57 @@ export default function CircleHome6Page() {
             <span>Brisbane, Australia</span>
             <span className="text-white/40">|</span>
             <span>Malayalam cinema &amp; digital entertainment</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Leadership cards (above About) */}
+      <section className="border-t border-white/5 bg-[#1b1b1b] py-14">
+        <div className="mx-auto max-w-7xl px-4 lg:px-8">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                src: '/images/Roy_and_Bindhu_hero_movie_section/Roy-trimmed-image.jpg',
+                title: 'Roy',
+                label: 'Producer',
+                imageClassName: LEADERSHIP_PHOTO_ENHANCE,
+                imageHeightClass: 'h-[150%]',
+              },
+              {
+                src: '/images/Roy_and_Bindhu_hero_movie_section/Bindu-trimmed-image.jpg',
+                title: 'Bindu',
+                label: 'Producer',
+                imageClassName: LEADERSHIP_PHOTO_ENHANCE,
+                imageHeightClass: 'h-[150%]',
+              },
+              {
+                src: '/images/Roy_and_Bindhu_hero_movie_section/Nadhirsha.jpg',
+                title: 'Nadirshah',
+                label: 'Director',
+                imageClassName: LEADERSHIP_PHOTO_ENHANCE_NADIRSHAH,
+                imageHeightClass: 'h-[125%]',
+              },
+            ].map((person) => (
+              <article
+                key={person.title}
+                className="overflow-hidden rounded-xl border border-white/10 bg-[#232323]/90 shadow-lg shadow-black/30"
+              >
+                <div className="relative h-[420px] w-full overflow-hidden">
+                  <Image
+                    src={person.src}
+                    alt={person.title}
+                    width={1200}
+                    height={1200}
+                      className={`${person.imageHeightClass} w-full object-cover ${person.imageClassName}`}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
+                <div className="pb-4 pl-4 pt-4">
+                  <h3 className="text-lg font-bold text-white">{person.title}</h3>
+                  <p className="mt-1 text-sm font-semibold text-gray-400">{person.label}</p>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -349,16 +409,16 @@ export default function CircleHome6Page() {
         </div>
         <div className="mx-auto flex justify-center px-4 pb-2 pt-10 lg:px-8">
           <Image
-            src={LOGO_SUBTITLE_WHITE_WITH_TAGLINE_JPG}
+            src={LOGO_WITH_WHITE_TAGLINE_PNG}
             alt="R&amp;B Productions"
             width={960}
             height={240}
-            className="h-auto w-full max-w-3xl object-contain"
-            sizes="(max-width: 768px) 100vw, 48rem"
+            className="mx-auto h-auto w-full max-h-36 max-w-2xl object-contain sm:max-h-40 md:max-h-44"
+            sizes="(max-width: 768px) 100vw, 42rem"
           />
         </div>
         <div className="mx-auto mt-12 max-w-7xl border-t border-white/10 px-4 pt-8 text-center lg:px-8 lg:text-left">
-          <p className="text-sm italic text-[#ababab]">
+          <p className="text-center text-sm italic text-[#ababab]">
             Copyright © {new Date().getFullYear()} <span className="font-bold not-italic text-[#c4c4c4]">R&amp;B Productions</span> — All Rights Reserved
           </p>
         </div>

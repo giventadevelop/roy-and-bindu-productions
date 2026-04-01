@@ -16,7 +16,7 @@ export default function AboutPage() {
     <div className="min-h-screen bg-[#161616] text-white">
       <CircleHome6Header />
       <main>
-        <CircleHome6AboutSection />
+        <CircleHome6AboutSection compact={false} />
       </main>
       <footer className="border-t border-white/10 bg-[#141414] py-10">
         <div className="mx-auto max-w-7xl px-4 text-center lg:px-8">
