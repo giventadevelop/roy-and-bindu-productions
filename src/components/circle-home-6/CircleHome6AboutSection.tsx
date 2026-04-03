@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { filmTw } from './filmDesignTokens';
+import { RB_LOGO_WHITE_TAGLINE_PNG } from './rbHeroMedia';
 import { filmNunito, filmPlayfair } from './filmFonts';
 
 /**
@@ -16,12 +17,12 @@ export default function CircleHome6AboutSection({ compact = true }: { compact?: 
         {!compact && (
           <div className="leading-none">
             <Image
-              src="/images/Roy_and_Bindhu_hero_movie_section/LOGO-with-white-tagline-1.png"
+              src={RB_LOGO_WHITE_TAGLINE_PNG}
               alt="R&B Productions logo"
-              width={1200}
-              height={400}
-              className="mx-auto block h-auto w-full max-w-3xl object-contain"
-              sizes="(max-width: 768px) 100vw, 52rem"
+              width={1600}
+              height={560}
+              className="mx-auto block h-auto w-full max-w-6xl object-contain"
+              sizes="(max-width: 768px) 100vw, 72rem"
               priority
             />
           </div>

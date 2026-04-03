@@ -8,7 +8,7 @@ import { filmTw } from './filmDesignTokens';
 import { filmNunito, filmPlayfair } from './filmFonts';
 import GiventaCreditLines from '@/components/GiventaCreditLines';
 import {
-  LOGO_WITH_WHITE_TAGLINE_PNG,
+  RB_LOGO_WHITE_TAGLINE_PNG,
   MOVIE_POSTER_RECREATED_1_JPG,
   MOVIE_POSTER_RECREATED_2_JPG,
   MOVIE_POSTER_RECREATED_3_JPG,
@@ -63,21 +63,21 @@ function LeadershipCard({ person }: { person: LeadershipPerson }) {
 
 const LEADERSHIP_TEAM: LeadershipPerson[] = [
   {
-    src: '/images/Roy_and_Bindhu_hero_movie_section/Roy-trimmed-image.jpg',
+    src: '/images/Roy_and_Bindu_hero_movie_section/Roy-trimmed-image.jpg',
     title: 'Roy',
     label: 'Producer',
     imageClassName: LEADERSHIP_PHOTO_ENHANCE,
     imageHeightClass: 'h-[150%]',
   },
   {
-    src: '/images/Roy_and_Bindhu_hero_movie_section/Bindu-trimmed-image.jpg',
+    src: '/images/Roy_and_Bindu_hero_movie_section/bindu_only_saree.png',
     title: 'Bindu',
     label: 'Producer',
     imageClassName: LEADERSHIP_PHOTO_ENHANCE,
     imageHeightClass: 'h-[150%]',
   },
   {
-    src: '/images/Roy_and_Bindhu_hero_movie_section/Nadhirsha.jpg',
+    src: '/images/Roy_and_Bindu_hero_movie_section/Nadhirsha.jpg',
     title: 'Nadirshah',
     label: 'Director',
     imageClassName: LEADERSHIP_PHOTO_ENHANCE_NADIRSHAH,
@@ -420,11 +420,11 @@ export default function CircleHome6Page() {
         </div>
         <div className="mx-auto flex justify-center px-4 pb-2 pt-10 lg:px-8">
           <Image
-            src={LOGO_WITH_WHITE_TAGLINE_PNG}
+            src={RB_LOGO_WHITE_TAGLINE_PNG}
             alt="R&amp;B Productions"
-            width={960}
-            height={240}
-            className="mx-auto h-auto w-full max-h-36 max-w-2xl object-contain sm:max-h-40 md:max-h-44"
+            width={1400}
+            height={400}
+            className="mx-auto h-auto w-full max-h-60 max-w-5xl object-contain sm:max-h-72 md:max-h-80"
             sizes="(max-width: 768px) 100vw, 42rem"
           />
         </div>

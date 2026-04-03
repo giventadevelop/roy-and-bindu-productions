@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import CircleHome6Header from '@/components/circle-home-6/CircleHome6Header';
 import { filmTw } from '@/components/circle-home-6/filmDesignTokens';
+import { RB_LOGO_WHITE_TAGLINE_PNG } from '@/components/circle-home-6/rbHeroMedia';
 import { filmNunito, filmPlayfair } from '@/components/circle-home-6/filmFonts';
 import GiventaCreditLines from '@/components/GiventaCreditLines';
 import { FILMS_GALLERY_IMAGES } from '@/data/filmsGalleryImages';
@@ -24,12 +25,12 @@ export default function FilmsPage() {
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
           <div className="mb-6 leading-none">
             <Image
-              src="/images/Roy_and_Bindhu_hero_movie_section/LOGO-with-white-tagline-1.png"
+              src={RB_LOGO_WHITE_TAGLINE_PNG}
               alt="R&amp;B Productions logo"
-              width={1200}
-              height={400}
-              className="mx-auto block h-auto w-full max-w-3xl object-contain"
-              sizes="(max-width: 768px) 100vw, 52rem"
+              width={1600}
+              height={560}
+              className="mx-auto block h-auto w-full max-w-6xl object-contain"
+              sizes="(max-width: 768px) 100vw, 72rem"
               priority
             />
           </div>
