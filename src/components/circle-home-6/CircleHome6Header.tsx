@@ -4,11 +4,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
+import { filmTw } from './filmDesignTokens';
 
+/** Inactive: white; active: design-system secondary / CTA red (#E11D48). */
 const navLinkBase =
-  'rounded-lg px-3 py-2.5 text-sm font-medium transition hover:bg-white/5 hover:text-[#fd6500]';
-const navLinkActive = 'font-extrabold text-[#ff7a1a]';
-const navLinkInactive = 'text-white';
+  'rounded-lg px-3 py-2.5 text-sm font-medium transition hover:bg-white/[0.06]';
+const navLinkInactive = 'text-white/90 hover:text-[#E11D48]';
+const navLinkActive = 'font-semibold !text-[#E11D48] hover:!text-[#E11D48]';
 
 export default function CircleHome6Header() {
   const pathname = usePathname();
@@ -37,7 +39,7 @@ export default function CircleHome6Header() {
   }, [close]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#1e1e1e]/95 backdrop-blur">
+    <header className={`sticky top-0 z-50 border-b ${filmTw.borderSubtle} bg-[#1e1e1e]/95 backdrop-blur`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-0 sm:gap-4 lg:px-8">
         <Link
           href="/"
@@ -58,10 +60,7 @@ export default function CircleHome6Header() {
         </Link>
 
         {/* Desktop navigation */}
-        <nav
-          className="hidden items-center gap-x-6 text-sm font-medium text-white/80 md:flex"
-          aria-label="Main navigation"
-        >
+        <nav className="hidden items-center gap-x-6 text-sm font-medium md:flex" aria-label="Main navigation">
           <Link href="/" className={`${navLinkBase} ${homeActive ? navLinkActive : navLinkInactive}`}>
             Home
           </Link>
@@ -76,7 +75,7 @@ export default function CircleHome6Header() {
         {/* Mobile menu toggle */}
         <button
           type="button"
-          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg border border-white/20 text-white transition hover:border-[#fd6500] hover:text-[#fd6500] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#fd6500] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1e1e1e] md:hidden"
+          className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg border border-white/20 text-white transition hover:border-[#E11D48] hover:text-[#E11D48] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E11D48] focus-visible:ring-offset-2 focus-visible:ring-offset-[#1e1e1e] md:hidden"
           onClick={toggle}
           aria-expanded={open}
           aria-controls="circle-home-mobile-menu"
@@ -97,7 +96,7 @@ export default function CircleHome6Header() {
       {/* Mobile menu panel (below bar; hamburger toggles) */}
       <div
         id="circle-home-mobile-menu"
-        className={`border-t border-white/10 bg-[#1a1a1a] shadow-[0_12px_24px_rgba(0,0,0,0.35)] md:hidden ${open ? 'block' : 'hidden'}`}
+        className={`border-t ${filmTw.borderSubtle} bg-[#161616] shadow-[0_12px_24px_rgba(0,0,0,0.35)] md:hidden ${open ? 'block' : 'hidden'}`}
         role="dialog"
         aria-modal="false"
         aria-label="Mobile navigation"
