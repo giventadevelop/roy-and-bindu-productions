@@ -129,7 +129,7 @@ export default function FilmsGalleryGrid({ items }: Props) {
             }}
             role="button"
             tabIndex={0}
-            className="film-card group cursor-pointer overflow-hidden rounded-xl border border-white/10 bg-[#1a1a1a] shadow-lg shadow-black/30"
+            className="film-card group cursor-pointer overflow-hidden rounded-xl border border-[#333333] bg-[#1e1e1e] shadow-[0_8px_24px_rgba(0,0,0,0.35)]"
             style={{ transitionDelay: `${Math.min(i * 60, 360)}ms` }}
             onClick={() => open(i)}
             onKeyDown={(e) => {
@@ -138,19 +138,6 @@ export default function FilmsGalleryGrid({ items }: Props) {
                 open(i);
               }
             }}
-            onMouseMove={(e) => {
-              const card = e.currentTarget;
-              const rect = card.getBoundingClientRect();
-              const x = (e.clientX - rect.left) / rect.width;
-              const y = (e.clientY - rect.top) / rect.height;
-              const rx = (0.5 - y) * 4;
-              const ry = (x - 0.5) * 4;
-              card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform =
-                'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0px)';
-            }}
           >
             <div className="relative aspect-[3/2] w-full overflow-hidden">
               <Image
@@ -158,7 +145,7 @@ export default function FilmsGalleryGrid({ items }: Props) {
                 alt={item.alt}
                 width={1536}
                 height={1025}
-                className="h-full w-full object-cover object-top transition duration-700 ease-out group-hover:scale-110"
+                className="h-full w-full object-cover object-top transition duration-500 ease-out group-hover:scale-[1.02]"
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 loading={i < 6 ? 'eager' : 'lazy'}
                 priority={i < 3}
@@ -174,18 +161,19 @@ export default function FilmsGalleryGrid({ items }: Props) {
             transform: translateY(28px) scale(0.985);
             transition:
               opacity 700ms ease,
-              transform 700ms cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 280ms ease;
+              transform 200ms ease,
+              box-shadow 200ms ease;
             will-change: transform, opacity;
           }
           .film-card.is-visible {
             opacity: 1;
             transform: translateY(0) scale(1);
           }
-          .film-card:hover {
+          .film-card.is-visible:hover {
+            transform: translateY(-2px) scale(1);
             box-shadow:
-              0 18px 44px -20px rgba(0, 0, 0, 0.75),
-              0 0 0 1px rgba(253, 101, 0, 0.22);
+              0 12px 28px -12px rgba(0, 0, 0, 0.55),
+              0 0 0 1px rgba(225, 29, 72, 0.2);
           }
         `}</style>
       </div>

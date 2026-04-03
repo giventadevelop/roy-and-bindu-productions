@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import CircleHome6Header from '@/components/circle-home-6/CircleHome6Header';
 import CircleHome6AboutSection from '@/components/circle-home-6/CircleHome6AboutSection';
+import { filmTw } from '@/components/circle-home-6/filmDesignTokens';
+import { filmNunito, filmPlayfair } from '@/components/circle-home-6/filmFonts';
 import GiventaCreditLines from '@/components/GiventaCreditLines';
 
 export const metadata: Metadata = {
@@ -13,24 +15,26 @@ export const metadata: Metadata = {
 /** Standalone About page — same copy and cards as the About section on the home page. */
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[#161616] text-white">
+    <div
+      className={`min-h-screen bg-[#161616] text-white ${filmNunito.className} ${filmNunito.variable} ${filmPlayfair.variable}`}
+    >
       <CircleHome6Header />
       <main>
         <CircleHome6AboutSection compact={false} />
       </main>
-      <footer className="border-t border-white/10 bg-[#141414] py-10">
+      <footer className={`${filmTw.footer} py-10`}>
         <div className="mx-auto max-w-7xl px-4 text-center lg:px-8">
           <Link
             href="/"
-            className="inline-flex items-center justify-center rounded-full border border-white/25 px-6 py-2.5 text-sm font-semibold text-white/90 transition hover:border-[#fd6500] hover:text-[#fd6500]"
+            className={`inline-flex items-center justify-center rounded-lg border border-white/35 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.06] ${filmTw.accentHover}`}
           >
             ← Back to home
           </Link>
-          <p className="mt-6 text-sm text-[#ababab]">
+          <p className={`mt-6 text-sm ${filmTw.muted}`}>
             Copyright © {new Date().getFullYear()}{' '}
-            <span className="font-semibold text-[#c4c4c4]">R&amp;B Productions</span> — All Rights Reserved
+            <span className="font-semibold text-[#e2e8f0]">R&amp;B Productions</span> — All Rights Reserved
           </p>
-          <div className="mx-auto mt-6 max-w-7xl border-t border-white/10 px-4 pt-6 text-center text-xs leading-relaxed text-[#ababab] lg:px-8">
+          <div className={`mx-auto mt-6 max-w-7xl border-t ${filmTw.borderSubtle} px-4 pt-6 text-center text-xs leading-relaxed ${filmTw.muted} lg:px-8`}>
             <GiventaCreditLines variant="rbDark" />
           </div>
         </div>

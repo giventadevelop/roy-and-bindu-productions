@@ -1,17 +1,7 @@
-import { Nunito_Sans, Playfair_Display } from 'next/font/google';
 import Image from 'next/image';
 import Link from 'next/link';
-
-const nunito = Nunito_Sans({
-  subsets: ['latin'],
-  weight: ['400', '600', '700'],
-  variable: '--font-circle-nunito',
-});
-const playfair = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['700'],
-  variable: '--font-circle-playfair',
-});
+import { filmTw } from './filmDesignTokens';
+import { filmNunito, filmPlayfair } from './filmFonts';
 
 /**
  * Shared About copy for R&B Productions — used on home (#about) and /about.
@@ -20,7 +10,7 @@ export default function CircleHome6AboutSection({ compact = true }: { compact?: 
   return (
     <section
       id="about"
-      className={`scroll-mt-24 border-t border-white/5 bg-gradient-to-b from-[#1a1a1a] to-[#161616] ${compact ? 'py-16 md:py-20' : 'pb-16 pt-0 md:pb-20'} ${nunito.className} ${nunito.variable} ${playfair.variable}`}
+      className={`scroll-mt-24 border-t ${filmTw.borderSubtle} bg-gradient-to-b from-[#1e1e1e] to-[#161616] ${compact ? 'py-16 md:py-20' : 'pb-16 pt-0 md:pb-20'} ${filmNunito.className} ${filmNunito.variable} ${filmPlayfair.variable}`}
     >
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
         {!compact && (
@@ -36,10 +26,10 @@ export default function CircleHome6AboutSection({ compact = true }: { compact?: 
             />
           </div>
         )}
-        <h2 className={`${playfair.className} mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl md:text-[2.75rem]`}>
+        <h2 className={`${filmPlayfair.className} mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl md:text-[2.75rem]`}>
           About R&amp;B Productions
         </h2>
-        <p className="max-w-3xl text-xl font-semibold leading-snug text-[#fd6500] sm:text-2xl md:text-[1.65rem]">
+        <p className={`max-w-3xl text-xl font-semibold leading-snug sm:text-2xl md:text-[1.65rem] ${filmTw.accent}`}>
           Digital entertainment with soulful stories — from Kerala to the world.
         </p>
         <p className="mt-8 max-w-4xl text-base leading-relaxed text-white/80 sm:text-lg md:text-xl md:leading-relaxed">
@@ -51,7 +41,7 @@ export default function CircleHome6AboutSection({ compact = true }: { compact?: 
           <div className="mt-10">
             <Link
               href="/about"
-              className="inline-flex items-center justify-center rounded-full border border-white/25 px-6 py-2.5 text-sm font-semibold text-white/90 transition hover:border-[#fd6500] hover:text-[#fd6500]"
+              className={`inline-flex items-center justify-center rounded-full border border-white/35 px-6 py-2.5 text-sm font-semibold text-white/90 transition hover:bg-white/[0.06] ${filmTw.accentHover}`}
             >
               Read More
             </Link>
@@ -79,20 +69,20 @@ export default function CircleHome6AboutSection({ compact = true }: { compact?: 
               </p>
             </div>
             <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="rounded-xl border border-white/10 bg-[#232323]/80 p-7 sm:p-8">
-                <h3 className="mb-3 text-base font-bold uppercase tracking-wider text-[#fd6500] sm:text-lg">Where we are</h3>
+              <div className={`rounded-xl border ${filmTw.borderSubtle} bg-[#232323]/90 p-7 shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:p-8`}>
+                <h3 className={`mb-3 text-base font-bold uppercase tracking-wider sm:text-lg ${filmTw.accent}`}>Where we are</h3>
                 <p className="text-base leading-relaxed text-white/85 sm:text-lg md:text-xl">
                   Brisbane, Australia — home base for Roy, Bindu, and R&amp;B Productions.
                 </p>
               </div>
-              <div className="rounded-xl border border-white/10 bg-[#232323]/80 p-7 sm:p-8">
-                <h3 className="mb-3 text-base font-bold uppercase tracking-wider text-[#fd6500] sm:text-lg">Focus</h3>
+              <div className={`rounded-xl border ${filmTw.borderSubtle} bg-[#232323]/90 p-7 shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:p-8`}>
+                <h3 className={`mb-3 text-base font-bold uppercase tracking-wider sm:text-lg ${filmTw.accent}`}>Focus</h3>
                 <p className="text-base leading-relaxed text-white/85 sm:text-lg md:text-xl">
                   Malayalam cinema — funding and producing films — plus digital storytelling and promotions.
                 </p>
               </div>
-              <div className="rounded-xl border border-white/10 bg-[#232323]/80 p-7 sm:p-8 sm:col-span-2 lg:col-span-1">
-                <h3 className="mb-3 text-base font-bold uppercase tracking-wider text-[#fd6500] sm:text-lg">Partners</h3>
+              <div className={`rounded-xl border ${filmTw.borderSubtle} bg-[#232323]/90 p-7 shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:col-span-2 sm:p-8 lg:col-span-1`}>
+                <h3 className={`mb-3 text-base font-bold uppercase tracking-wider sm:text-lg ${filmTw.accent}`}>Partners</h3>
                 <p className="text-base leading-relaxed text-white/85 sm:text-lg md:text-xl">
                   Dileesh Pothan · Nadirshah · Fahadh Faasil · Syam Pushkaran
                 </p>
