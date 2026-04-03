@@ -1,16 +1,18 @@
 'use client';
 
 import Image from 'next/image';
+
+import { RB_LOGO_WHITE_TAGLINE_PNG } from './rbHeroMedia';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { filmTw } from './filmDesignTokens';
 
-/** Inactive: white; active: design-system secondary / CTA red (#E11D48). */
+/** Inactive: accent red (#E11D48); active (current route): white. */
 const navLinkBase =
   'rounded-lg px-3 py-2.5 text-sm font-medium transition hover:bg-white/[0.06]';
-const navLinkInactive = 'text-white/90 hover:text-[#E11D48]';
-const navLinkActive = 'font-semibold !text-[#E11D48] hover:!text-[#E11D48]';
+const navLinkInactive = 'text-[#E11D48] hover:text-white/90';
+const navLinkActive = 'font-semibold !text-white hover:!text-white';
 
 export default function CircleHome6Header() {
   const pathname = usePathname();
@@ -47,13 +49,13 @@ export default function CircleHome6Header() {
           aria-label="R&amp;B Productions — Home"
           onClick={close}
         >
-          <span className="relative block h-20 w-[clamp(160px,50vw,340px)] sm:h-24 sm:w-[clamp(260px,50vw,420px)] lg:h-28 lg:max-w-[480px] lg:w-[min(480px,42vw)]">
+          <span className="relative block h-24 w-[clamp(180px,52vw,380px)] sm:h-28 sm:w-[clamp(280px,52vw,460px)] lg:h-32 lg:max-w-[560px] lg:w-[min(560px,46vw)]">
             <Image
-              src="/images/logo/roy_and_bindu_prod_logo_transparent.png"
+              src={RB_LOGO_WHITE_TAGLINE_PNG}
               alt="R&amp;B Productions"
               fill
               className="object-contain object-left"
-              sizes="(max-width: 640px) 280px, (max-width: 1024px) 380px, 480px"
+              sizes="(max-width: 640px) 320px, (max-width: 1024px) 420px, 560px"
               priority
             />
           </span>

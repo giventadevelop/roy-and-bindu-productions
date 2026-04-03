@@ -1,9 +1,9 @@
 /**
  * Local copies of gallery images from https://bhavanastudios.com/gallery/
- * (stored under public/images/Roy_and_Bindhu_hero_movie_section/Films/).
+ * (stored under public/images/Roy_and_Bindu_hero_movie_section/Films/).
  * Order matches the reference page layout.
  */
-const BASE = '/images/Roy_and_Bindhu_hero_movie_section/Films';
+const BASE = '/images/Roy_and_Bindu_hero_movie_section/Films';
 
 export type FilmsGalleryImage = { src: string; alt: string };
 

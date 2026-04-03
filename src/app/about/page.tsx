@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import CircleHome6Header from '@/components/circle-home-6/CircleHome6Header';
 import CircleHome6AboutSection from '@/components/circle-home-6/CircleHome6AboutSection';
+import { RB_HERO_POSTER_JPG, ROYS_FAMILY_CHILDREN_JPG } from '@/components/circle-home-6/rbHeroMedia';
 import { filmTw } from '@/components/circle-home-6/filmDesignTokens';
 import { filmNunito, filmPlayfair } from '@/components/circle-home-6/filmFonts';
 import GiventaCreditLines from '@/components/GiventaCreditLines';
@@ -21,6 +23,33 @@ export default function AboutPage() {
       <CircleHome6Header />
       <main>
         <CircleHome6AboutSection compact={false} />
+        <section
+          className={`border-t ${filmTw.borderSubtle} bg-gradient-to-b from-[#161616] to-[#141414] py-12 md:py-16`}
+          aria-label="Gallery"
+        >
+          <div className="mx-auto max-w-7xl space-y-10 px-4 lg:px-8">
+            <div className="relative w-full overflow-hidden rounded-xl border border-white/10 bg-[#1e1e1e] shadow-lg">
+              <Image
+                src={RB_HERO_POSTER_JPG}
+                alt="R&amp;B Productions"
+                width={1600}
+                height={900}
+                className="h-auto w-full object-contain"
+                sizes="(max-width: 1280px) 100vw, 1280px"
+              />
+            </div>
+            <div className="relative w-full overflow-hidden rounded-xl border border-white/10 bg-[#1e1e1e] shadow-lg">
+              <Image
+                src={ROYS_FAMILY_CHILDREN_JPG}
+                alt="Roy&apos;s family"
+                width={1600}
+                height={900}
+                className="h-auto w-full object-contain"
+                sizes="(max-width: 1280px) 100vw, 1280px"
+              />
+            </div>
+          </div>
+        </section>
       </main>
       <footer className={`${filmTw.footer} py-10`}>
         <div className="mx-auto max-w-7xl px-4 text-center lg:px-8">

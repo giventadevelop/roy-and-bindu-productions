@@ -1,6 +1,6 @@
 /**
  * One-off: downloads full-size gallery images from bhavanastudios.com/gallery/
- * into public/images/Roy_and_Bindhu_hero_movie_section/Films/
+ * into public/images/Roy_and_Bindu_hero_movie_section/Films/
  * Run: node scripts/download-bhavana-gallery.mjs
  */
 import { mkdir, writeFile } from 'fs/promises';
@@ -8,7 +8,7 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const OUT = join(__dirname, '../public/images/Roy_and_Bindhu_hero_movie_section/Films');
+const OUT = join(__dirname, '../public/images/Roy_and_Bindu_hero_movie_section/Films');
 
 const BASE = 'https://bhavanastudios.com/wp-content/uploads/2023/10/';
 const FILES = [

@@ -37,7 +37,7 @@ export default function GiventaCreditLines({ variant = 'rbDark', className = '' 
       </p>
       <p>
         <a href="https://www.giventa.com" target="_blank" rel="noopener noreferrer" className={link}>
-          https://www.giventa.com
+          www.giventa.com
         </a>
       </p>
       <p>
