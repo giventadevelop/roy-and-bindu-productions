@@ -38,7 +38,8 @@ export default function AboutPage() {
                 sizes="(max-width: 1280px) 100vw, 1280px"
               />
             </div>
-            <div className="relative w-full overflow-hidden rounded-xl border border-white/10 bg-[#1e1e1e] shadow-lg">
+            {/* Hidden for now: second gallery image (main > section Gallery > div > div[2] > img) */}
+            <div className="relative hidden w-full overflow-hidden rounded-xl border border-white/10 bg-[#1e1e1e] shadow-lg">
               <Image
                 src={ROYS_FAMILY_CHILDREN_JPG}
                 alt="Roy&apos;s family"
