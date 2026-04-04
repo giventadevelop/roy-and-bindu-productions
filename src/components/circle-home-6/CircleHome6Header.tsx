@@ -22,6 +22,9 @@ export default function CircleHome6Header() {
   const aboutActive = pathname === '/about';
   const filmsActive = pathname === '/films';
 
+  /** No header logo on About / Films — logo appears in page content instead. */
+  const hideHeaderLogo = pathname === '/about' || pathname === '/films';
+
   const close = useCallback(() => setOpen(false), []);
   const toggle = useCallback(() => setOpen((o) => !o), []);
 
@@ -42,24 +45,28 @@ export default function CircleHome6Header() {
 
   return (
     <header className={`sticky top-0 z-50 border-b ${filmTw.borderSubtle} bg-[#1e1e1e]/95 backdrop-blur`}>
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-0 sm:gap-4 lg:px-8">
-        <Link
-          href="/"
-          className="inline-flex min-w-0 shrink flex-col items-start py-0 pl-0 pr-2 sm:pr-3"
-          aria-label="R&amp;B Productions — Home"
-          onClick={close}
-        >
-          <span className="relative block h-24 w-[clamp(180px,52vw,380px)] sm:h-28 sm:w-[clamp(280px,52vw,460px)] lg:h-32 lg:max-w-[560px] lg:w-[min(560px,46vw)]">
-            <Image
-              src={RB_LOGO_WHITE_TAGLINE_PNG}
-              alt="R&amp;B Productions"
-              fill
-              className="object-contain object-left"
-              sizes="(max-width: 640px) 320px, (max-width: 1024px) 420px, 560px"
-              priority
-            />
-          </span>
-        </Link>
+      <div
+        className={`mx-auto flex max-w-7xl items-center gap-3 px-4 py-0 sm:gap-4 lg:px-8 ${hideHeaderLogo ? 'justify-end' : 'justify-between'}`}
+      >
+        {!hideHeaderLogo && (
+          <Link
+            href="/"
+            className="inline-flex min-w-0 shrink flex-col items-start py-0 pl-0 pr-2 sm:pr-3"
+            aria-label="R&amp;B Productions — Home"
+            onClick={close}
+          >
+            <span className="relative block h-24 w-[clamp(180px,52vw,380px)] sm:h-28 sm:w-[clamp(280px,52vw,460px)] lg:h-32 lg:max-w-[560px] lg:w-[min(560px,46vw)]">
+              <Image
+                src={RB_LOGO_WHITE_TAGLINE_PNG}
+                alt="R&amp;B Productions"
+                fill
+                className="object-contain object-left"
+                sizes="(max-width: 640px) 320px, (max-width: 1024px) 420px, 560px"
+                priority
+              />
+            </span>
+          </Link>
+        )}
 
         {/* Desktop navigation */}
         <nav className="hidden items-center gap-x-6 text-sm font-medium md:flex" aria-label="Main navigation">
