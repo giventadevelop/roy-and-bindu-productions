@@ -16,7 +16,7 @@ export const ROYS_FAMILY_CHILDREN_JPG = `${RB_HERO_MEDIA_BASE}/roys_family_child
  * Hero background loop (H.264 + silent AAC, +faststart per project encoding docs).
  * @see documentation/r-and-b-productions/HERO_VIDEO_GEMINI_VEO3_PROMPT_AND_WEB_ENCODING.html
  */
-export const RB_HERO_LOOP_MP4 = `${RB_HERO_MEDIA_BASE}/video/all_standing_walkin_merged_saree_lens_flare.mp4`;
+export const RB_HERO_LOOP_MP4 = `${RB_HERO_MEDIA_BASE}/video/all_count_down_saree_lens_flare_1.mp4`;
 
 /** Home section — key people film-strip graphic. */
 export const ROY_BINDHU_NADHIRSHAH_FILM_STRIP_JPG = `${RB_HERO_MEDIA_BASE}/Roy_Bindhu_Nadirsha.jpg`;
