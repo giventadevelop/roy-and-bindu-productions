@@ -8,11 +8,12 @@ import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { filmTw } from './filmDesignTokens';
 
-/** Inactive: accent red (#E11D48); active (current route): white. */
+/** Inactive: white; active (current route): theme accent #E11D48. Same real weight for all (Nunito 800 — see filmFonts). */
 const navLinkBase =
-  'rounded-lg px-3 py-2.5 text-sm font-medium transition hover:bg-white/[0.06]';
-const navLinkInactive = 'text-[#E11D48] hover:text-white/90';
-const navLinkActive = 'font-semibold !text-white hover:!text-white';
+  'rounded-lg px-3 py-2.5 text-base font-extrabold transition hover:bg-white/[0.06] md:text-lg';
+const navLinkInactive = 'text-white hover:text-white/95';
+/** `!font-extrabold` + Nunito 800 in filmFonts — same stroke as inactive; color-only change for current route. */
+const navLinkActive = '!font-extrabold !text-[#E11D48] hover:!text-[#E11D48]';
 
 export default function CircleHome6Header() {
   const pathname = usePathname();
@@ -21,9 +22,6 @@ export default function CircleHome6Header() {
   const homeActive = pathname === '/';
   const aboutActive = pathname === '/about';
   const filmsActive = pathname === '/films';
-
-  /** No header logo on About / Films — logo appears in page content instead. */
-  const hideHeaderLogo = pathname === '/about' || pathname === '/films';
 
   const close = useCallback(() => setOpen(false), []);
   const toggle = useCallback(() => setOpen((o) => !o), []);
@@ -43,33 +41,34 @@ export default function CircleHome6Header() {
     return () => window.removeEventListener('keydown', onKey);
   }, [close]);
 
+  /**
+   * `position: sticky` is unreliable here because `overflow-x: hidden` on `html`/`body`
+   * (globals.css) breaks sticky in many browsers. Use `fixed` + in-flow spacer instead.
+   */
   return (
-    <header className={`sticky top-0 z-50 border-b ${filmTw.borderSubtle} bg-[#1e1e1e]/95 backdrop-blur`}>
-      <div
-        className={`mx-auto flex max-w-7xl items-center gap-3 px-4 py-0 sm:gap-4 lg:px-8 ${hideHeaderLogo ? 'justify-end' : 'justify-between'}`}
-      >
-        {!hideHeaderLogo && (
-          <Link
-            href="/"
-            className="inline-flex min-w-0 shrink flex-col items-start py-0 pl-0 pr-2 sm:pr-3"
-            aria-label="R&amp;B Productions — Home"
-            onClick={close}
-          >
-            <span className="relative block h-24 w-[clamp(180px,52vw,380px)] sm:h-28 sm:w-[clamp(280px,52vw,460px)] lg:h-32 lg:max-w-[560px] lg:w-[min(560px,46vw)]">
-              <Image
-                src={RB_LOGO_WHITE_TAGLINE_PNG}
-                alt="R&amp;B Productions"
-                fill
-                className="object-contain object-left"
-                sizes="(max-width: 640px) 320px, (max-width: 1024px) 420px, 560px"
-                priority
-              />
-            </span>
-          </Link>
-        )}
+    <>
+    <header className={`fixed left-0 right-0 top-0 z-50 border-b ${filmTw.borderSubtle} bg-[#1e1e1e]/95 backdrop-blur`}>
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-0 sm:gap-4 lg:px-8">
+        <Link
+          href="/"
+          className="inline-flex min-w-0 shrink flex-col items-start py-0 pl-0 pr-2 sm:pr-3"
+          aria-label="R&amp;B Productions — Home"
+          onClick={close}
+        >
+          <span className="relative block h-24 w-[clamp(180px,52vw,380px)] sm:h-28 sm:w-[clamp(280px,52vw,460px)] lg:h-32 lg:max-w-[560px] lg:w-[min(560px,46vw)]">
+            <Image
+              src={RB_LOGO_WHITE_TAGLINE_PNG}
+              alt="R&amp;B Productions"
+              fill
+              className="object-contain object-left"
+              sizes="(max-width: 640px) 320px, (max-width: 1024px) 420px, 560px"
+              priority
+            />
+          </span>
+        </Link>
 
         {/* Desktop navigation */}
-        <nav className="hidden items-center gap-x-6 text-sm font-medium md:flex" aria-label="Main navigation">
+        <nav className="hidden items-center gap-x-6 md:flex" aria-label="Main navigation">
           <Link href="/" className={`${navLinkBase} ${homeActive ? navLinkActive : navLinkInactive}`}>
             Home
           </Link>
@@ -131,5 +130,8 @@ export default function CircleHome6Header() {
         </nav>
       </div>
     </header>
+    {/* Reserve the same height as the top bar so page content is not covered (logo vs compact bar). */}
+    <div aria-hidden="true" className="h-24 shrink-0 sm:h-28 lg:h-32" />
+    </>
   );
 }

@@ -8,94 +8,33 @@ import { filmTw } from './filmDesignTokens';
 import { filmNunito, filmPlayfair } from './filmFonts';
 import GiventaCreditLines from '@/components/GiventaCreditLines';
 import {
-  RB_LOGO_WHITE_TAGLINE_PNG,
+  RB_LOGO_WITHOUT_BG_PNG,
   MOVIE_POSTER_RECREATED_1_JPG,
   MOVIE_POSTER_RECREATED_2_JPG,
   MOVIE_POSTER_RECREATED_3_JPG,
   MOVIE_POSTER_RECREATED_4_JPG,
+  MOVIE_POSTER_RECREATED_5_JPG,
+  MOVIE_POSTER_RECREATED_6_JPG,
   RB_HERO_LOOP_MP4,
   RB_HERO_POSTER_JPG,
+  ROY_BINDHU_NADHIRSHAH_FILM_STRIP_JPG,
   VIDEO_BRISBANE_THUMBNAIL_JPG,
 } from './rbHeroMedia';
 
 /** Demo CDN — theme snapshot has no local wp-content/uploads; mirror uses live demo URLs. */
 const U = 'https://demo.harutheme.com/circle/wp-content/uploads';
 
-/** Shared CSS filters for leadership card photos (Roy, Bindu). */
-const LEADERSHIP_PHOTO_ENHANCE = 'brightness-[1.15] contrast-[1.06] saturate-[1.04]';
-
-/** Stronger lift for Nadirshah photo (3rd card) — darker source exposure. */
-const LEADERSHIP_PHOTO_ENHANCE_NADIRSHAH =
-  'brightness-[1.28] contrast-[1.07] saturate-[1.05]';
-
-type LeadershipPerson = {
-  src: string;
-  title: string;
-  label: string;
-  imageClassName: string;
-  imageHeightClass: string;
-};
-
-/**
- * Leadership profile grid — matches production (rnb-productions.com) Circle Home 6 cards:
- * fixed image column height, object-cover, elevated #232323 surface, white/10 border.
- */
-function LeadershipCard({ person }: { person: LeadershipPerson }) {
-  return (
-    <article className="overflow-hidden rounded-xl border border-white/10 bg-[#232323]/90 shadow-lg shadow-black/30">
-      <div className="relative h-[300px] w-full overflow-hidden bg-black sm:h-[380px] lg:h-[420px]">
-        <Image
-          src={person.src}
-          alt={person.title}
-          width={1200}
-          height={1200}
-          className={`${person.imageHeightClass} w-full object-cover ${person.imageClassName}`}
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        />
-      </div>
-      <div className="pb-4 pl-4 pt-4">
-        <h3 className="text-lg font-bold text-white">{person.title}</h3>
-        <p className="mt-1 text-sm font-semibold text-gray-400">{person.label}</p>
-      </div>
-    </article>
-  );
-}
-
-const LEADERSHIP_TEAM: LeadershipPerson[] = [
-  {
-    src: '/images/Roy_and_Bindu_hero_movie_section/Roy-trimmed-image.jpg',
-    title: 'Roy',
-    label: 'Producer',
-    imageClassName: LEADERSHIP_PHOTO_ENHANCE,
-    imageHeightClass: 'h-[150%]',
-  },
-  {
-    src: '/images/Roy_and_Bindu_hero_movie_section/bindu_only_saree.png',
-    title: 'Bindu',
-    label: 'Producer',
-    imageClassName: LEADERSHIP_PHOTO_ENHANCE,
-    imageHeightClass: 'h-[150%]',
-  },
-  {
-    src: '/images/Roy_and_Bindu_hero_movie_section/Nadhirsha.jpg',
-    title: 'Nadirshah',
-    label: 'Director',
-    imageClassName: LEADERSHIP_PHOTO_ENHANCE_NADIRSHAH,
-    imageHeightClass: 'h-[125%]',
-  },
-];
-
 /** Current Projects strip — three posters only. */
 const NOW_PLAYING = [
-  { src: MOVIE_POSTER_RECREATED_1_JPG, title: 'Wynonna', rating: '8.7', cats: 'Action / Drama', label: 'Hot' as const },
-  { src: MOVIE_POSTER_RECREATED_2_JPG, title: 'War is Coming', rating: '8.7', cats: 'Comedy / Historycal', label: 'Trend' as const },
-  { src: MOVIE_POSTER_RECREATED_3_JPG, title: 'Red Sonja', rating: '8.7', cats: 'Comedy / Drama' },
+  { src: MOVIE_POSTER_RECREATED_1_JPG, title: 'Yatra', rating: '8.7', cats: 'Action / Drama', label: 'Hot' as const },
+  { src: MOVIE_POSTER_RECREATED_2_JPG, title: 'Azhangalilekk', rating: '8.7', cats: 'Comedy / Historycal', label: 'Trend' as const },
+  { src: MOVIE_POSTER_RECREATED_3_JPG, title: 'Kadal', rating: '8.7', cats: 'Comedy / Drama' },
 ];
 
 const THEATER = [
   { src: MOVIE_POSTER_RECREATED_4_JPG, title: 'Wynonna', rating: '8.7', label: 'Hot' as const },
-  { src: `${U}/2017/08/war-is-coming.jpg`, title: 'War is Coming', rating: '8.7', label: 'Trend' as const },
-  { src: `${U}/2017/08/red-sonja.jpg`, title: 'Red Sonja', rating: '8.7' },
+  { src: MOVIE_POSTER_RECREATED_5_JPG, title: 'War is Coming', rating: '8.7', label: 'Trend' as const },
+  { src: MOVIE_POSTER_RECREATED_6_JPG, title: 'Red Sonja', rating: '8.7' },
   { src: `${U}/2017/08/drive-angry.jpg`, title: 'Drive Angry', rating: '8.7' },
   { src: `${U}/2017/08/eiskonigin.jpg`, title: 'Last Christmas', rating: '8.7', label: 'New' as const },
   { src: `${U}/2017/08/better-call-saul.jpg`, title: 'Film Studio', rating: '8.7' },
@@ -264,13 +203,19 @@ export default function CircleHome6Page() {
         </div>
       </section>
 
-      {/* Leadership — profile grid (aligned with rnb-productions.com / Circle Home 6) */}
-      <section className="border-t border-white/5 bg-[#1b1b1b] py-14">
-        <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {LEADERSHIP_TEAM.map((person) => (
-              <LeadershipCard key={person.title} person={person} />
-            ))}
+      {/* Film strip graphic — Roy, Bindhu & Nadirshah (inner card: no vertical padding on mobile; sm+ restores spacing) */}
+      <section className="border-t border-white/5 bg-[#1b1b1b] py-12 sm:py-16 lg:py-20">
+        <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-14">
+          <div className="rounded-2xl border border-white/10 bg-[#161616]/60 px-5 py-0 shadow-inner sm:px-10 sm:py-12 lg:px-14 lg:py-16">
+            <Image
+              src={ROY_BINDHU_NADHIRSHAH_FILM_STRIP_JPG}
+              alt="Roy, Bindhu, and Nadirshah — film strip"
+              width={3840}
+              height={1600}
+              className="mx-auto h-auto w-full max-w-full object-contain"
+              sizes="(max-width: 1280px) calc(100vw - 3rem), 80rem"
+              priority
+            />
           </div>
         </div>
       </section>
@@ -418,20 +363,21 @@ export default function CircleHome6Page() {
             </ul>
           </div>
         </div>
-        <div className="mx-auto flex justify-center px-4 pb-2 pt-10 lg:px-8">
+        <div className="mx-auto flex w-full max-w-7xl justify-center px-4 pb-0 pt-4 leading-none sm:pt-5 lg:px-8">
           <Image
-            src={RB_LOGO_WHITE_TAGLINE_PNG}
+            src={RB_LOGO_WITHOUT_BG_PNG}
             alt="R&amp;B Productions"
-            width={1400}
-            height={400}
-            className="mx-auto h-auto w-full max-h-60 max-w-5xl object-contain sm:max-h-72 md:max-h-80"
-            sizes="(max-width: 768px) 100vw, 42rem"
+            width={2000}
+            height={1000}
+            className="mx-auto block h-auto w-full max-w-full object-contain object-center max-h-96 sm:max-h-[28rem] md:max-h-[32rem] lg:max-h-[min(36rem,65vh)] xl:max-h-[min(40rem,70vh)]"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 92vw, min(80rem, 100vw)"
           />
         </div>
-        <div className={`mx-auto mt-12 max-w-7xl border-t ${filmTw.borderSubtle} px-4 pt-8 text-center lg:px-8 lg:text-left`}>
+        <div className={`mx-auto mt-5 max-w-7xl border-t ${filmTw.borderSubtle} px-4 pt-5 text-center lg:px-8 lg:text-left`}>
           <p className={`text-center text-sm italic ${filmTw.muted}`}>
-            Copyright © {new Date().getFullYear()}{' '}
-            <span className="font-bold not-italic text-[#e2e8f0]">R&amp;B Productions</span> — All Rights Reserved
+            <span>Copyright © {new Date().getFullYear()}</span>
+            <span className="ml-2 font-bold not-italic text-[#e2e8f0] sm:ml-3">R&amp;B Productions</span>
+            <span> — All Rights Reserved</span>
           </p>
         </div>
         <div className={`mx-auto mt-6 max-w-7xl border-t ${filmTw.borderSubtle} px-4 pt-6 text-center text-xs leading-relaxed ${filmTw.muted} lg:px-8`}>

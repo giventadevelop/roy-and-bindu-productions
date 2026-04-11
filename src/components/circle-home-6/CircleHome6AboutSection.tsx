@@ -1,7 +1,5 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { filmTw } from './filmDesignTokens';
-import { RB_LOGO_WHITE_TAGLINE_PNG } from './rbHeroMedia';
 import { filmNunito, filmPlayfair } from './filmFonts';
 
 /**
@@ -11,22 +9,9 @@ export default function CircleHome6AboutSection({ compact = true }: { compact?: 
   return (
     <section
       id="about"
-      className={`scroll-mt-24 border-t ${filmTw.borderSubtle} bg-gradient-to-b from-[#1e1e1e] to-[#161616] ${compact ? 'py-16 md:py-20' : 'pb-16 pt-0 md:pb-20'} ${filmNunito.className} ${filmNunito.variable} ${filmPlayfair.variable}`}
+      className={`scroll-mt-24 border-t ${filmTw.borderSubtle} bg-gradient-to-b from-[#1e1e1e] to-[#161616] py-16 md:py-20 ${filmNunito.className} ${filmNunito.variable} ${filmPlayfair.variable}`}
     >
       <div className="mx-auto max-w-7xl px-4 lg:px-8">
-        {!compact && (
-          <div className="leading-none">
-            <Image
-              src={RB_LOGO_WHITE_TAGLINE_PNG}
-              alt="R&B Productions logo"
-              width={1600}
-              height={560}
-              className="mx-auto block h-auto w-full max-w-6xl object-contain"
-              sizes="(max-width: 768px) 100vw, 72rem"
-              priority
-            />
-          </div>
-        )}
         <h2 className={`${filmPlayfair.className} mb-4 text-4xl font-bold leading-tight text-white sm:text-5xl md:text-[2.75rem]`}>
           About R&amp;B Productions
         </h2>
