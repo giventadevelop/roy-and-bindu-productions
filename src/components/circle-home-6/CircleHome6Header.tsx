@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-import { RB_LOGO_WHITE_TAGLINE_PNG } from './rbHeroMedia';
+import { RB_NEW_LOGO_WITH_FILMSTRIP_BG_PNG } from './rbHeroMedia';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
@@ -57,7 +57,7 @@ export default function CircleHome6Header() {
         >
           <span className="relative block h-24 w-[clamp(180px,52vw,380px)] sm:h-28 sm:w-[clamp(280px,52vw,460px)] lg:h-32 lg:max-w-[560px] lg:w-[min(560px,46vw)]">
             <Image
-              src={RB_LOGO_WHITE_TAGLINE_PNG}
+              src={RB_NEW_LOGO_WITH_FILMSTRIP_BG_PNG}
               alt="R&amp;B Productions"
               fill
               className="object-contain object-left"
