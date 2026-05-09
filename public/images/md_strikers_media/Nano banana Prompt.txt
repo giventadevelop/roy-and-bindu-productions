@@ -1,0 +1,281 @@
+```json
+{
+  "poster_size": "Standard vertical flyer/poster",
+  "background_image": {
+    "image_url": "image_0.png",
+    "description": "A dynamic composition featuring the US Capitol building, the US flag, and a soccer ball on a split background (blue-sky upper, dark-blue textured lower)."
+  },
+  "content": [
+    {
+      "element": "header",
+      "items": [
+        {
+          "type": "logo",
+          "logo_url": "image_0.png",
+          "description": "An orange and gold shield logo for 'MD STRIKERS SPORTS CLUB WASHINGTON DC'."
+        },
+        {
+          "type": "text",
+          "text_content": "www.md-strikers.com",
+          "font_style": {
+            "family": "Montserrat",
+            "size": "16px",
+            "color": "#fff",
+            "weight": "regular"
+            "align": "right"
+          }
+        },
+        {
+          "type": "text",
+          "text_content": "MAY 23",
+          "font_style": {
+            "family": "Montserrat",
+            "size": "24px",
+            "color": "#fff",
+            "weight": "bold",
+            "align": "right"
+          },
+          "box": {
+              "color": "#8b0000",
+              "padding": "10px"
+          }
+        }
+      ]
+    },
+    {
+      "element": "title_club",
+      "type": "text",
+      "text_content": "MD STRIKERS SPORTS CLUB WASHINGTON, DC",
+      "font_style": {
+        "family": "Montserrat",
+        "size": "36px",
+        "color": "#fff",
+        "weight": "bold",
+        "align": "center"
+      },
+      "position": "Centered top-middle"
+    },
+    {
+      "element": "event_title",
+      "items": [
+        {
+          "type": "text",
+          "text_content": "CAPITAL CUP 2026",
+          "font_style": {
+            "family": "Montserrat",
+            "size": "96px",
+            "color": "#ffc107",
+            "weight": "black",
+            "align": "center",
+            "shadow_color": "#000",
+            "shadow_offset": "4px 4px 4px"
+          }
+        },
+        {
+          "type": "text",
+          "text_content": "OTHELLO REGIONAL PARK, FREDERICK, MARYLAND",
+          "font_style": {
+            "family": "Montserrat",
+            "size": "24px",
+            "color": "#000",
+            "weight": "medium",
+            "align": "center"
+          }
+        }
+      ]
+    },
+    {
+      "element": "sponsor_section",
+      "background": {
+        "color": "#002d62",
+        "border_color": "#ffc107",
+        "border_width": "5px"
+      },
+      "items": [
+        {
+          "type": "text",
+          "text_content": "DIAMOND SPONSOR",
+          "font_style": {
+            "family": "Montserrat",
+            "size": "60px",
+            "color": "#b1faff",
+            "weight": "bold",
+            "align": "left",
+            "letter_spacing": "2px"
+          }
+        },
+        {
+          "type": "logo",
+          "logo_url": "image_0.png",
+          "description": "SAMSON PROPERTIES logo with text below."
+        },
+        {
+          "type": "text",
+          "text_content": "SAMSON PROPERTIES",
+          "font_style": {
+            "family": "Montserrat",
+            "size": "48px",
+            "color": "#000",
+            "weight": "light",
+            "align": "left",
+             "font_variant": "small-caps"
+          }
+        }
+      ]
+    },
+    {
+      "element": "sponsor_profile",
+      "items": [
+        {
+          "type": "image",
+          "image_url": "image_0.png",
+          "description": "A close-up photograph of a South Asian man with a mustache in a dark suit, red patterned tie, and light-colored checkered shirt."
+        },
+        {
+          "type": "text",
+          "text_content": "REX THOMAS",
+          "font_style": {
+            "family": "Montserrat",
+            "size": "36px",
+            "color": "#ffc107",
+            "weight": "bold",
+            "align": "right"
+          }
+        },
+        {
+          "type": "text",
+          "text_content": "REALTOR LICENSED IN DC, MD & VA",
+          "font_style": {
+            "family": "Montserrat",
+            "size": "20px",
+            "color": "#fff",
+            "weight": "bold",
+            "align": "right"
+          }
+        },
+        {
+          "type": "text",
+          "text_content": "TOP PRODUCING REAL ESTATE AGENT SINCE 2014",
+          "font_style": {
+            "family": "Montserrat",
+            "size": "16px",
+            "color": "#fff",
+            "weight": "regular",
+            "align": "right"
+          }
+        }
+      ]
+    },
+    {
+      "element": "contact_info",
+      "items": [
+        {
+          "type": "contact_item",
+          "icon_url": "image_0.png",
+          "icon_alt": "Phone icon",
+          "text": "240 593 7680"
+        },
+        {
+          "type": "contact_item",
+          "icon_url": "image_0.png",
+          "icon_alt": "Phone icon",
+          "text": "240 630 8689"
+        },
+        {
+          "type": "contact_item",
+          "icon_url": "image_0.png",
+          "icon_alt": "Email icon",
+          "text": "rexthomas97@gmail.com"
+        },
+        {
+          "type": "contact_item",
+          "icon_url": "image_0.png",
+          "icon_alt": "Map pin icon",
+          "text": "801 Washingtonian Blvd 600 Gaithersburg, MD 20878"
+        }
+      ],
+       "font_style": {
+        "family": "Montserrat",
+        "size": "20px",
+        "color": "#000",
+        "weight": "regular",
+        "align": "left"
+      }
+    },
+    {
+      "element": "chief_guest",
+      "items": [
+        {
+          "type": "text",
+          "text_content": "CHIEF GUEST: IM VIJAYAN - INDIAN FOOTBALL LEGEND",
+          "font_style": {
+            "family": "Montserrat",
+            "size": "24px",
+            "color": "#fff",
+            "weight": "bold",
+            "align": "center"
+          }
+        },
+        {
+          "type": "image",
+          "image_url": "image_0.png",
+          "description": "A circular photo in a dark blue border of a smiling South Asian man in a red top."
+        }
+      ]
+    },
+    {
+      "element": "footer",
+      "background": {
+          "color": "#002d62"
+      },
+      "items": [
+        {
+          "type": "text",
+          "text_content": "MAY 23 SOCCER TOURNAMENT",
+          "font_style": {
+            "family": "Montserrat",
+            "size": "24px",
+            "color": "#fff",
+            "weight": "bold",
+            "align": "center"
+          }
+        },
+        {
+          "type": "text",
+          "text_content": "Media & Online Presence",
+          "font_style": {
+            "family": "Montserrat",
+            "size": "16px",
+            "color": "#ccc",
+            "weight": "regular",
+            "align": "center"
+          }
+        },
+        {
+          "type": "text",
+          "text_content": "Digital Support Provided By Giventa Inc. | www.giventa.com | sales@giventa.com",
+          "font_style": {
+            "family": "Montserrat",
+            "size": "14px",
+            "color": "#fff",
+            "weight": "regular",
+            "align": "center"
+          }
+        }
+      ]
+    }
+  ],
+  "accessibility": {
+    "alt_text": "Flyer for the MD Strikers Sports Club Capital Cup 2026. Includes date, location, diamond sponsor (Samson Properties with agent Rex Thomas), chief guest (IM Vijayan), and digital support information."
+  }
+}
+```
+
+we need to create a hero image for the web page from this image. Modify the JSON data as per the requirement. The crest and every letter, every sentence should be made big enough, especially the domain name www.md-strikers.com. The crest should also be made bigger and clear. The footer section should be clear enough and legible and bigger. The credit line plus the sponsor section should be really highlighted. None of the content, the text content, should be modified; it should remain the same for the I M Vijayan picture. So show a bigger picture of him. Add this image for I M Vijayan, a bigger picture. the aspect ratio should be good, should be big enough. Do not alter any of the images which are going to be added. The attached images should add as is, without changing the face.
+
+The crest and the IM Vijayan pictures are attached.
+
+please modify the JSON data as per the requirement given above. Plus provide the modified JSON data and an effective prompt for nano/banana with a copy button so that I can paste it to the AI image edit tool.
+
+Both the JSON modified JSON and the related prompt should be copied in a single copy button so that I can copy them in a single shot.
+

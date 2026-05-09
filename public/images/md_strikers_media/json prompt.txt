@@ -1,0 +1,3 @@
+JSON - Prompt for Nano banana
+---------------------------------------------
+Generate the json data for the uploaded image it should contain complete details (font styles, color, etc) of this image
