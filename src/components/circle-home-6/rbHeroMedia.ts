@@ -18,13 +18,25 @@ export const ROYS_FAMILY_CHILDREN_JPG = `${RB_HERO_MEDIA_BASE}/roys_family_child
  */
 export const RB_HERO_LOOP_MP4 = `${RB_HERO_MEDIA_BASE}/video/all_count_down_saree_lens_flare_1.mp4`;
 
-/** Home section — key people film-strip graphic. */
-export const ROY_BINDHU_NADHIRSHAH_FILM_STRIP_JPG = `${RB_HERO_MEDIA_BASE}/Roy_Bindhu_Nadirsha.jpg`;
+/** Home section — key people film-strip graphic (white text variant). */
+export const ROY_BINDHU_NADHIRSHAH_FILM_STRIP_JPG = `${RB_HERO_MEDIA_BASE}/Film_Strip_with_white_text.jpg`;
 
-/** Transparent PNG — primary logo + white tagline (header, About, Films). */
+/** Transparent PNG — primary logo + white tagline (About, Films, etc.). */
 export const RB_LOGO_WHITE_TAGLINE_PNG = `${RB_HERO_MEDIA_BASE}/roy_and_bindu_prod_logo_white_with_tagline__transparent.png`;
 
-/** Logo mark without background (footer on Circle home). Filename contains `&` — encoded in URL. */
+/** Home header logo — film on “i” (PNG). */
+export const RB_LOGO_FILM_ON_I_PNG = `${RB_HERO_MEDIA_BASE}/Logo-with-film-on-i.png`;
+
+/**
+ * Circle home header + footer — full logo with tagline (`R&B-productions-logo-1.png`).
+ * Filename contains `&` — encoded in URL.
+ */
+export const RB_PRODUCTIONS_LOGO_1_PNG = `${RB_HERO_MEDIA_BASE}/R%26B-productions-logo-1.png`;
+
+/** Circle home footer — logo with filmstrip background. Filename contains `&` — encoded in URL. */
+export const RB_NEW_LOGO_WITH_FILMSTRIP_BG_PNG = `${RB_HERO_MEDIA_BASE}/R%26B_New_Logo_With_Filmstrip_Bg.png`;
+
+/** Logo mark without background. Filename contains `&` — encoded in URL. */
 export const RB_LOGO_WITHOUT_BG_PNG = `${RB_HERO_MEDIA_BASE}/R%26B_Logo_Without_Bg.png`;
 
 /** JPEG variant (opaque background), optional. */

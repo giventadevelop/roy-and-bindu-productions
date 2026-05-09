@@ -8,7 +8,7 @@ import { filmTw } from './filmDesignTokens';
 import { filmNunito, filmPlayfair } from './filmFonts';
 import GiventaCreditLines from '@/components/GiventaCreditLines';
 import {
-  RB_LOGO_WITHOUT_BG_PNG,
+  RB_NEW_LOGO_WITH_FILMSTRIP_BG_PNG,
   MOVIE_POSTER_RECREATED_1_JPG,
   MOVIE_POSTER_RECREATED_2_JPG,
   MOVIE_POSTER_RECREATED_3_JPG,
@@ -203,20 +203,18 @@ export default function CircleHome6Page() {
         </div>
       </section>
 
-      {/* Film strip graphic — Roy, Bindhu & Nadirshah (inner card: no vertical padding on mobile; sm+ restores spacing) */}
-      <section className="border-t border-white/5 bg-[#1b1b1b] py-12 sm:py-16 lg:py-20">
-        <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-14">
-          <div className="rounded-2xl border border-white/10 bg-[#161616]/60 px-5 py-0 shadow-inner sm:px-10 sm:py-12 lg:px-14 lg:py-16">
-            <Image
-              src={ROY_BINDHU_NADHIRSHAH_FILM_STRIP_JPG}
-              alt="Roy, Bindhu, and Nadirshah — film strip"
-              width={3840}
-              height={1600}
-              className="mx-auto h-auto w-full max-w-full object-contain"
-              sizes="(max-width: 1280px) calc(100vw - 3rem), 80rem"
-              priority
-            />
-          </div>
+      {/* Film strip graphic — Roy, Bindhu & Nadirshah */}
+      <section className="border-t border-white/5 bg-[#1b1b1b]">
+        <div className="mx-auto w-full max-w-7xl">
+          <Image
+            src={ROY_BINDHU_NADHIRSHAH_FILM_STRIP_JPG}
+            alt="Roy, Bindhu, and Nadirshah — film strip"
+            width={3840}
+            height={1600}
+            className="mx-auto block h-auto w-3/4 object-contain"
+            sizes="(max-width: 1280px) 75vw, 60rem"
+            priority
+          />
         </div>
       </section>
 
@@ -365,7 +363,7 @@ export default function CircleHome6Page() {
         </div>
         <div className="mx-auto flex w-full max-w-7xl justify-center px-4 pb-0 pt-4 leading-none sm:pt-5 lg:px-8">
           <Image
-            src={RB_LOGO_WITHOUT_BG_PNG}
+            src={RB_NEW_LOGO_WITH_FILMSTRIP_BG_PNG}
             alt="R&amp;B Productions"
             width={2000}
             height={1000}
