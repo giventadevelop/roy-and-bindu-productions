@@ -1,9 +1,7 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import CircleHome6Header from '@/components/circle-home-6/CircleHome6Header';
 import { filmTw } from '@/components/circle-home-6/filmDesignTokens';
-import { RB_LOGO_WHITE_TAGLINE_PNG } from '@/components/circle-home-6/rbHeroMedia';
 import { filmNunito, filmPlayfair } from '@/components/circle-home-6/filmFonts';
 import GiventaCreditLines from '@/components/GiventaCreditLines';
 import { FILMS_GALLERY_IMAGES } from '@/data/filmsGalleryImages';
@@ -21,19 +19,8 @@ export default function FilmsPage() {
       className={`min-h-screen bg-[#161616] text-white ${filmNunito.className} ${filmNunito.variable} ${filmPlayfair.variable}`}
     >
       <CircleHome6Header />
-      <main className="pb-16 pt-3 sm:pt-4">
+      <main className="pb-16 pt-6 sm:pt-8">
         <div className="mx-auto max-w-7xl px-4 lg:px-8">
-          <div className="mb-6 leading-none">
-            <Image
-              src={RB_LOGO_WHITE_TAGLINE_PNG}
-              alt="R&amp;B Productions logo"
-              width={1600}
-              height={560}
-              className="mx-auto block h-auto w-full max-w-6xl object-contain"
-              sizes="(max-width: 768px) 100vw, 72rem"
-              priority
-            />
-          </div>
           <header className="mb-10 text-center">
             <p className={`text-xs font-semibold uppercase tracking-[0.35em] ${filmTw.accent}`}>R&amp;B Productions</p>
             <h1

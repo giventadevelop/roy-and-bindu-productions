@@ -787,8 +787,8 @@ export default function Header({ hideMenuItems = false, variant = 'charity', isT
                 {/* Unite India logo icon - full header height, 102px wide */}
                 <div className="flex items-center justify-center h-full w-[102px] min-w-[102px] rounded-xl flex-shrink-0 overflow-hidden transition-all duration-300 group-hover:scale-105">
                   <Image
-                    src="/images/logos/Malayalees_US/Malayalees_US_Header_Branding.png"
-                    alt="Unite India"
+                    src="/images/Roy_and_Bindu_hero_movie_section/Logo-with-filmStrip-in-Alphabet.jpg"
+                    alt="R&B Productions"
                     width={102}
                     height={72}
                     className="w-full h-full object-contain"
@@ -1065,8 +1065,8 @@ export default function Header({ hideMenuItems = false, variant = 'charity', isT
             <Link href="/" className="group flex items-center gap-2.5" onClick={closeMobileMenu}>
               <div className="flex items-center justify-center w-[86px] min-w-[86px] h-14 rounded-lg flex-shrink-0 overflow-hidden">
                 <Image
-                  src="/images/logos/Malayalees_US/Malayalees_US_Header_Branding.png"
-                  alt="Unite India"
+                  src="/images/Roy_and_Bindu_hero_movie_section/Logo-with-filmStrip-in-Alphabet.jpg"
+                  alt="R&B Productions"
                   width={86}
                   height={56}
                   className="w-full h-full object-contain"
