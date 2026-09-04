@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import type { EventWithMedia, EventMediaDTO, EventDetailsDTO, EventFeaturedPerformersDTO, EventContactsDTO, EventProgramDirectorsDTO, EventSponsorsJoinDTO } from "@/types";
+import type { EventWithMedia, EventMediaDTO, EventDetailsDTO, EventFeaturedPerformersDTO, EventContactsDTO, EventProgramDirectorsDTO, EventSponsorsJoinDTO, EventAgendaItemDTO } from "@/types";
 import { formatInTimeZone } from 'date-fns-tz';
 import LocationDisplay from '@/components/LocationDisplay';
 import { EventMediaSlideshow } from '@/app/gallery/components/EventMediaSlideshow';
@@ -22,6 +22,40 @@ function getInitials(name: string): string {
     return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
   }
   return name.substring(0, 2).toUpperCase();
+}
+
+function agendaItemImageUrl(item: EventAgendaItemDTO): string | null {
+  const fromMedia = item.eventMedia?.fileUrl || item.eventMedia?.preSignedUrl;
+  if (fromMedia) return fromMedia;
+  if (item.imageUrl && item.imageUrl.trim() !== '') return item.imageUrl.trim();
+  return null;
+}
+
+function agendaItemTimeLabel(item: EventAgendaItemDTO): string {
+  const start = (item.startTime || '').trim();
+  const end = (item.endTime || '').trim();
+  if (start && end) return `${start} – ${end}`;
+  return start || end || '';
+}
+
+function groupAgendaItems(
+  items: EventAgendaItemDTO[],
+  eventStartDate?: string | null
+): Array<{ dateKey: string; items: EventAgendaItemDTO[] }> {
+  const groups = new Map<string, EventAgendaItemDTO[]>();
+  for (const item of items) {
+    const raw = item.scheduleDate ? String(item.scheduleDate).slice(0, 10) : '';
+    const dateKey = raw || (eventStartDate ? String(eventStartDate).slice(0, 10) : '__event-day__');
+    const list = groups.get(dateKey) || [];
+    list.push(item);
+    groups.set(dateKey, list);
+  }
+  return Array.from(groups.entries())
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([dateKey, grouped]) => ({
+      dateKey,
+      items: [...grouped].sort((x, y) => (x.sortOrder ?? 0) - (y.sortOrder ?? 0)),
+    }));
 }
 
 // Color palette for cards and placeholders (light versions of design system colors)
@@ -124,11 +158,14 @@ export default function EventDetailsPage() {
   const [featuredPerformers, setFeaturedPerformers] = useState<EventFeaturedPerformersDTO[]>([]);
   const [contacts, setContacts] = useState<EventContactsDTO[]>([]);
   const [programDirectors, setProgramDirectors] = useState<EventProgramDirectorsDTO[]>([]);
+  const [agendaItems, setAgendaItems] = useState<EventAgendaItemDTO[]>([]);
   const [sponsors, setSponsors] = useState<EventSponsorsJoinDTO[]>([]);
   const [sponsorBannerImages, setSponsorBannerImages] = useState<Map<number, string>>(new Map());
   const [loading, setLoading] = useState(true);
   const [showSlideshow, setShowSlideshow] = useState(false);
   const [slideshowInitialIndex, setSlideshowInitialIndex] = useState(0);
+  const [agendaFlyer, setAgendaFlyer] = useState<EventMediaDTO | null>(null);
+  const [showAgendaFlyerSlideshow, setShowAgendaFlyerSlideshow] = useState(false);
   // Track failed images for placeholder fallback
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
   // Focus group filter and options for gallery
@@ -247,6 +284,34 @@ export default function EventDetailsPage() {
         } catch (err) {
           console.error('Error fetching program directors:', err);
           setProgramDirectors([]);
+        }
+
+        // Fetch published event-day agenda items
+        try {
+          const agendaParams = new URLSearchParams({
+            'eventId.equals': eventId.toString(),
+            'isPublished.equals': 'true',
+            sort: 'sortOrder,asc',
+            size: '200',
+          });
+          const agendaRes = await fetch(`/api/proxy/event-agenda-items?${agendaParams.toString()}`);
+
+          if (!agendaRes.ok) {
+            console.warn('Agenda fetch failed:', agendaRes.status, agendaRes.statusText);
+            setAgendaItems([]);
+          } else {
+            const contentType = agendaRes.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+              const agendaData = await agendaRes.json();
+              setAgendaItems(Array.isArray(agendaData) ? agendaData : [agendaData]);
+            } else {
+              console.warn('Agenda response is not JSON:', contentType);
+              setAgendaItems([]);
+            }
+          }
+        } catch (err) {
+          console.error('Error fetching event agenda:', err);
+          setAgendaItems([]);
         }
 
         // Fetch sponsors from event-sponsors-join table
@@ -395,6 +460,22 @@ export default function EventDetailsPage() {
       const mediaRes = await fetch(`/api/proxy/event-medias?${params.toString()}`);
       const mediaData = await mediaRes.json();
       setMedia(Array.isArray(mediaData) ? mediaData : [mediaData]);
+
+      const flyerParams = new URLSearchParams({
+        'eventId.equals': eventId.toString(),
+        'isAgendaFlyer.equals': 'true',
+        'isPublic.equals': 'true',
+        size: '1',
+      });
+      const flyerRes = await fetch(`/api/proxy/event-medias?${flyerParams.toString()}`);
+      if (flyerRes.ok) {
+        const flyerData = await flyerRes.json();
+        const flyerList = Array.isArray(flyerData) ? flyerData : flyerData ? [flyerData] : [];
+        const first = flyerList[0] as EventMediaDTO | undefined;
+        setAgendaFlyer(first?.fileUrl || first?.preSignedUrl ? first : null);
+      } else {
+        setAgendaFlyer(null);
+      }
     }
     fetchMedia();
   }, [eventId, eventFocusGroupIdFilter]);
@@ -403,12 +484,13 @@ export default function EventDetailsPage() {
   if (!event) return <div className="p-8 text-center text-red-500">Event not found.</div>;
 
   // Find hero image - Prioritize isHomePageHeroImage, then fallback to eventFlyer
-  const heroImage = media.find((m) => m.isHomePageHeroImage && m.fileUrl) ||
-                    media.find((m) => m.eventFlyer && m.fileUrl) ||
-                    media.find((m) => m.fileUrl);
+  const heroImage = media.find((m) => m.isHomePageHeroImage && m.fileUrl && !m.isAgendaFlyer) ||
+                    media.find((m) => m.eventFlyer && m.fileUrl && !m.isAgendaFlyer) ||
+                    media.find((m) => m.fileUrl && !m.isAgendaFlyer);
   // Use default hero image if no hero image found (same as events page)
   const heroImageUrl = heroImage?.fileUrl || "/images/default_placeholder_hero_image.jpeg";
-  const gallery = media.filter((m) => m.fileUrl && (!heroImage || m.id !== heroImage.id));
+  const gallery = media.filter((m) => m.fileUrl && (!heroImage || m.id !== heroImage.id) && !m.isAgendaFlyer);
+  const agendaFlyerUrl = agendaFlyer?.fileUrl || agendaFlyer?.preSignedUrl || null;
 
   // Get preview images (first 12 media items for grid display)
   const previewMedia = gallery.slice(0, 12);
@@ -913,6 +995,146 @@ export default function EventDetailsPage() {
                           </div>
                         </div>
                       </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Agenda Flyer — one event-level schedule image; shown even if the timed list is empty */}
+              {agendaFlyer && agendaFlyerUrl && (
+                <div className="mb-10">
+                  <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-3">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center">
+                      <svg className="w-8 h-8 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    Agenda Flyer
+                  </h2>
+                  <div className="group relative overflow-hidden rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 to-white shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col sm:flex-row sm:items-center gap-4 p-4">
+                    <div className="relative flex-shrink-0 w-full sm:w-40 h-40 rounded-xl overflow-hidden bg-white border border-sky-100">
+                      <Image
+                        src={agendaFlyerUrl}
+                        alt={agendaFlyer.title || 'Agenda Flyer'}
+                        fill
+                        className="object-contain"
+                        sizes="160px"
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-heading text-lg font-semibold text-gray-900">
+                        {agendaFlyer.title || 'Agenda Flyer'}
+                      </h3>
+                      <p className="text-sm text-gray-700 mt-1">
+                        View or download the full-day event schedule.
+                      </p>
+                      <div className="mt-4 flex flex-wrap gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setShowAgendaFlyerSlideshow(true)}
+                          className="flex-shrink-0 h-14 rounded-xl bg-sky-100 hover:bg-sky-200 flex items-center justify-center gap-3 transition-all duration-300 hover:scale-105 px-6"
+                          title="View Agenda Flyer"
+                          aria-label="View Agenda Flyer"
+                        >
+                          <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-sky-200 flex items-center justify-center">
+                            <svg className="w-6 h-6 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                          </div>
+                          <span className="font-semibold text-sky-700">View</span>
+                        </button>
+                        <a
+                          href={agendaFlyerUrl}
+                          download={agendaFlyer.title || 'agenda-flyer'}
+                          className="flex-shrink-0 h-14 rounded-xl bg-teal-100 hover:bg-teal-200 flex items-center justify-center gap-3 transition-all duration-300 hover:scale-105 px-6"
+                          title="Download Agenda Flyer"
+                          aria-label="Download Agenda Flyer"
+                        >
+                          <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-teal-200 flex items-center justify-center">
+                            <svg className="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                          </div>
+                          <span className="font-semibold text-teal-700">Download</span>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Event Day Agenda — timed program list */}
+              {agendaItems.length > 0 && (
+                <div className="mb-10">
+                  <h2 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-3">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-cyan-100 flex items-center justify-center">
+                      <svg className="w-8 h-8 text-cyan-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                    Event Day Agenda
+                  </h2>
+                  <div className="space-y-8">
+                    {groupAgendaItems(agendaItems, event.startDate).map((group) => {
+                      const dateLabel =
+                        group.dateKey === '__event-day__'
+                          ? 'Event day'
+                          : formatDate(
+                              group.dateKey.includes('T') ? group.dateKey : `${group.dateKey}T12:00:00`,
+                              event.timezone || 'America/New_York'
+                            );
+                      return (
+                        <div key={group.dateKey}>
+                          <h3 className="text-sm font-semibold uppercase tracking-wide text-cyan-800 mb-3">
+                            {dateLabel}
+                          </h3>
+                          <div className="flex flex-col gap-3">
+                            {group.items.map((item, index) => {
+                              const thumbUrl = agendaItemImageUrl(item);
+                              const timeLabel = agendaItemTimeLabel(item);
+                              const thumbKey = `agenda-${item.id ?? index}`;
+                              const showThumb = Boolean(thumbUrl) && !failedImages.has(thumbKey);
+                              return (
+                                <div
+                                  key={item.id ?? `${item.title}-${index}`}
+                                  className="group relative overflow-hidden rounded-2xl border border-white/50 bg-gradient-to-br from-cyan-50 to-white shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col sm:flex-row sm:items-center gap-4 p-4"
+                                >
+                                  <div className="flex-shrink-0">
+                                    <span className="inline-flex items-center justify-center min-w-[7.5rem] px-3 py-2 rounded-xl bg-cyan-600 text-white text-sm font-semibold text-center shadow-sm">
+                                      {timeLabel}
+                                    </span>
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <h4 className="font-heading text-lg font-semibold text-gray-900">
+                                      {item.title}
+                                    </h4>
+                                    {item.description?.trim() && (
+                                      <p className="text-sm text-gray-700 leading-relaxed mt-1 whitespace-pre-wrap">
+                                        {item.description}
+                                      </p>
+                                    )}
+                                  </div>
+                                  {showThumb && thumbUrl && (
+                                    <div className="relative flex-shrink-0 w-full sm:w-24 h-24 rounded-xl overflow-hidden bg-white/70 border border-cyan-100">
+                                      <Image
+                                        src={thumbUrl}
+                                        alt={item.title}
+                                        fill
+                                        className="object-contain"
+                                        sizes="96px"
+                                        onError={() => {
+                                          setFailedImages((prev) => new Set(prev).add(thumbKey));
+                                        }}
+                                      />
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
                       );
                     })}
                   </div>
@@ -1477,6 +1699,14 @@ export default function EventDetailsPage() {
             media={gallery}
             onClose={() => setShowSlideshow(false)}
             initialIndex={slideshowInitialIndex}
+          />
+        )}
+        {showAgendaFlyerSlideshow && event && agendaFlyer && (
+          <EventMediaSlideshow
+            event={event}
+            media={[agendaFlyer]}
+            onClose={() => setShowAgendaFlyerSlideshow(false)}
+            initialIndex={0}
           />
         )}
         <div className="mt-8 text-center">

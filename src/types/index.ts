@@ -184,6 +184,8 @@ export interface EventMediaDTO {
   fileSize?: number;
   isPublic?: boolean;
   eventFlyer?: boolean;
+  /** Full-day schedule flyer image for the event (distinct from Event Flyer and per-row agenda thumbs). */
+  isAgendaFlyer?: boolean;
   isEventManagementOfficialDocument?: boolean;
   preSignedUrl?: string;
   preSignedUrlExpiresAt?: string;
@@ -1055,6 +1057,27 @@ export interface EventProgramDirectorsDTO {
   createdAt: string;
   updatedAt: string;
   event?: EventDetailsDTO;
+}
+
+/**
+ * Timed event-day program item (Onam-style agenda). Overlapping times are allowed.
+ * `scheduleDate` null means inherit the event start date / single-day list.
+ */
+export interface EventAgendaItemDTO {
+  id?: number;
+  tenantId?: string;
+  scheduleDate?: string | null;
+  startTime: string;
+  endTime?: string | null;
+  title: string;
+  description?: string | null;
+  imageUrl?: string | null;
+  sortOrder: number;
+  isPublished: boolean;
+  createdAt: string;
+  updatedAt: string;
+  event?: EventDetailsDTO;
+  eventMedia?: EventMediaDTO | null;
 }
 
 // WhatsApp Integration Types

@@ -289,6 +289,18 @@ export default function EventOverviewPage() {
               </Link>
 
               <Link
+                href={`/admin/events/${eventId}/agenda`}
+                className="flex flex-col items-center justify-center bg-cyan-50 hover:bg-cyan-100 text-cyan-800 rounded-lg shadow-md p-4 text-xs transition-all group"
+                title="Event Day Agenda"
+                aria-label="Event Day Agenda"
+              >
+                <div className="flex-shrink-0 w-14 h-14 rounded-xl bg-cyan-100 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300">
+                  <FaClock className="w-10 h-10 text-cyan-500" />
+                </div>
+                <span className="font-semibold text-center leading-tight">Event Day Agenda</span>
+              </Link>
+
+              <Link
                 href={`/admin/manual-payments?eventId=${eventId}`}
                 className="flex flex-col items-center justify-center bg-teal-50 hover:bg-teal-100 text-teal-800 rounded-lg shadow-md p-4 text-xs transition-all group"
                 title="Manual Payments"
