@@ -10,6 +10,7 @@ import RecurrencePreview from '@/components/RecurrencePreview';
 import type { RecurrencePattern, RecurrenceEndType } from '@/lib/recurrenceUtils';
 import { validateRecurrenceEndDate, generateOccurrenceDates } from '@/lib/recurrenceUtils';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import FromEmailSelect from '@/components/FromEmailSelect';
 import { fetchTenantEmailAddressesServer } from '@/app/admin/tenant-email-addresses/ApiServerActions';
 import EventFormHelpTooltip from '@/components/EventFormHelpTooltip';
@@ -43,6 +44,7 @@ export const defaultEvent: EventDetailsDTO = {
   enableGuestPricing: false,
   isRegistrationRequired: false,
   isSportsEvent: false,
+  isCompetitionEvent: false,
   isLive: false,
   isFeaturedEvent: false,
   featuredEventPriorityRanking: 0,
@@ -1030,6 +1032,7 @@ export function EventForm({ event, eventTypes, onSubmit, loading, onCancel }: Ev
       enableGuestPricing: !!form.enableGuestPricing,
       isRegistrationRequired: !!form.isRegistrationRequired,
       isSportsEvent: !!form.isSportsEvent,
+      isCompetitionEvent: !!form.isCompetitionEvent,
       isLive: !!form.isLive,
       isFeaturedEvent: !!form.isFeaturedEvent,
       featuredEventPriorityRanking: Number(form.featuredEventPriorityRanking) || 0,
@@ -1427,6 +1430,7 @@ export function EventForm({ event, eventTypes, onSubmit, loading, onCancel }: Ev
           { name: 'enableGuestPricing', label: 'Enable Guest Pricing', checked: form.enableGuestPricing ?? false },
           { name: 'isRegistrationRequired', label: 'Registration Required', checked: form.isRegistrationRequired ?? false },
           { name: 'isSportsEvent', label: 'Sports Event', checked: form.isSportsEvent ?? false },
+          { name: 'isCompetitionEvent', label: 'Competition Event', checked: form.isCompetitionEvent ?? false },
           { name: 'isLive', label: 'Live Event', checked: form.isLive ?? false },
           { name: 'isFeaturedEvent', label: 'Featured Event', checked: form.isFeaturedEvent ?? false },
         ].map(({ name, label, checked }) => (
@@ -1453,6 +1457,43 @@ export function EventForm({ event, eventTypes, onSubmit, loading, onCancel }: Ev
           </div>
         ))}
       </div>
+
+      {form.isCompetitionEvent && form.id && (
+        <div className="p-4 bg-rose-50 border border-rose-200 rounded-lg">
+          <p className="text-sm text-rose-800 mb-3">
+            Competition mode is enabled. Configure the catalog, settings, and results in the admin competitions section.
+          </p>
+          <div className="flex flex-col gap-3">
+            <Link
+              href={`/admin/events/${form.id}/competitions/list`}
+              className="w-full flex-shrink-0 h-14 rounded-xl bg-emerald-100 hover:bg-emerald-200 flex items-center justify-center gap-3 transition-all duration-300 hover:scale-105"
+              title="Competitions"
+              aria-label="Competitions"
+            >
+              <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-emerald-200 flex items-center justify-center">
+                <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h10M4 18h10" />
+                </svg>
+              </div>
+              <span className="font-semibold text-emerald-700">Competitions</span>
+            </Link>
+            <Link
+              href={`/admin/events/${form.id}/competitions/settings`}
+              className="w-full flex-shrink-0 h-14 rounded-xl bg-violet-100 hover:bg-violet-200 flex items-center justify-center gap-3 transition-all duration-300 hover:scale-105"
+              title="Competition settings"
+              aria-label="Competition settings"
+            >
+              <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-violet-200 flex items-center justify-center">
+                <svg className="w-6 h-6 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <span className="font-semibold text-violet-700">Competition settings</span>
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Payment Configuration Section */}
       <div className="border-t border-gray-200 pt-6 mt-6 bg-gradient-to-br from-green-50 via-teal-50 to-blue-50 rounded-lg p-6">
