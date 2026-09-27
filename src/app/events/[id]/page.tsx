@@ -167,8 +167,6 @@ export default function EventDetailsPage() {
   const [showSlideshow, setShowSlideshow] = useState(false);
   const [showAgendaFlyerSlideshow, setShowAgendaFlyerSlideshow] = useState(false);
   const [slideshowInitialIndex, setSlideshowInitialIndex] = useState(0);
-  const [agendaFlyer, setAgendaFlyer] = useState<EventMediaDTO | null>(null);
-  const [showAgendaFlyerSlideshow, setShowAgendaFlyerSlideshow] = useState(false);
   // Track failed images for placeholder fallback
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
   // Focus group filter and options for gallery
