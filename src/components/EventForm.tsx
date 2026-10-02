@@ -57,9 +57,39 @@ export const defaultEvent: EventDetailsDTO = {
   updatedAt: '',
 };
 
+function toLocalYmdFromDate(date: Date): string {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${d}`;
+}
+
+/**
+ * Normalize backend/form dates to YYYY-MM-DD.
+ * Accepts YYYY-MM-DD, MM/DD/YYYY, and ISO datetimes without shifting the day.
+ */
+function toDateOnlyYmd(dateStr: string | undefined | null): string {
+  if (!dateStr) return '';
+  const trimmed = dateStr.trim();
+  if (!trimmed) return '';
+  if (/^\d{2}\/\d{2}\/\d{4}$/.test(trimmed)) {
+    const [month, day, year] = trimmed.split('/');
+    return `${year}-${month}-${day}`;
+  }
+  const ymd = trimmed.split('T')[0].split(' ')[0];
+  if (/^\d{4}-\d{2}-\d{2}$/.test(ymd)) return ymd;
+  return '';
+}
+
 export function EventForm({ event, eventTypes, onSubmit, loading, onCancel }: EventFormProps) {
   const router = useRouter();
-  const [form, setForm] = useState<EventDetailsDTO>({ ...defaultEvent, ...event });
+  const [form, setForm] = useState<EventDetailsDTO>({
+    ...defaultEvent,
+    ...event,
+    startDate: event?.startDate ? (toDateOnlyYmd(event.startDate) || event.startDate) : (event?.startDate ?? ''),
+    endDate: event?.endDate ? (toDateOnlyYmd(event.endDate) || event.endDate) : (event?.endDate ?? ''),
+    promotionStartDate: event?.promotionStartDate ? (toDateOnlyYmd(event.promotionStartDate) || event.promotionStartDate) : (event?.promotionStartDate ?? ''),
+  });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showErrors, setShowErrors] = useState(false);
   const [isEmailListEmpty, setIsEmailListEmpty] = useState(false);
@@ -130,7 +160,14 @@ export function EventForm({ event, eventTypes, onSubmit, loading, onCancel }: Ev
         }
 
         // Set form with validated fromEmail
-        const formData = { ...defaultEvent, ...event, fromEmail: validFromEmail };
+        const formData = {
+          ...defaultEvent,
+          ...event,
+          fromEmail: validFromEmail,
+          startDate: toDateOnlyYmd(event.startDate) || event.startDate || '',
+          endDate: toDateOnlyYmd(event.endDate) || event.endDate || '',
+          promotionStartDate: toDateOnlyYmd(event.promotionStartDate) || event.promotionStartDate || '',
+        };
         setForm(formData);
 
         // Load donation metadata (NEW - preferred)
@@ -183,7 +220,7 @@ export function EventForm({ event, eventTypes, onSubmit, loading, onCancel }: Ev
             setRecurrencePattern((recurrenceConfig.pattern as RecurrencePattern) || '');
             setRecurrenceInterval(recurrenceConfig.interval || 1);
             setRecurrenceEndType((recurrenceConfig.endType as RecurrenceEndType) || 'END_DATE');
-            setRecurrenceEndDate(recurrenceConfig.endDate || '');
+            setRecurrenceEndDate(toDateOnlyYmd(recurrenceConfig.endDate) || recurrenceConfig.endDate || '');
             setRecurrenceOccurrences(recurrenceConfig.occurrences || 1);
             setRecurrenceWeeklyDays(recurrenceConfig.weeklyDays || []);
             if (recurrenceConfig.monthlyDay === 'LAST') {
@@ -207,7 +244,7 @@ export function EventForm({ event, eventTypes, onSubmit, loading, onCancel }: Ev
               setRecurrencePattern((recurrenceConfig.pattern as RecurrencePattern) || '');
               setRecurrenceInterval(recurrenceConfig.interval || 1);
               setRecurrenceEndType((recurrenceConfig.endType as RecurrenceEndType) || 'END_DATE');
-              setRecurrenceEndDate(recurrenceConfig.endDate || '');
+              setRecurrenceEndDate(toDateOnlyYmd(recurrenceConfig.endDate) || recurrenceConfig.endDate || '');
               setRecurrenceOccurrences(recurrenceConfig.occurrences || 1);
               setRecurrenceWeeklyDays(recurrenceConfig.weeklyDays || []);
               if (recurrenceConfig.monthlyDay === 'LAST') {
@@ -376,12 +413,13 @@ export function EventForm({ event, eventTypes, onSubmit, loading, onCancel }: Ev
       }
     }
 
-    // Validate external ticket URL (mutual exclusion with Event Cube)
+    // Validate external ticket/registration URL (mutual exclusion with Event Cube)
+    const externalUrlLabel = form.isRegistrationRequired ? 'registration' : 'ticket';
     if (useEventCube && useExternalTicketUrl && externalTicketUrl?.trim()) {
-      errs.externalTicketUrl = 'Cannot use both Event Cube and an external ticket URL. Choose one.';
+      errs.externalTicketUrl = `Cannot use both Event Cube and an external ${externalUrlLabel} URL. Choose one.`;
     } else if (useExternalTicketUrl) {
       if (!externalTicketUrl?.trim()) {
-        errs.externalTicketUrl = 'External ticket URL is required when enabled';
+        errs.externalTicketUrl = `External ${externalUrlLabel} URL is required when enabled`;
       } else if (!/^https?:\/\//i.test(externalTicketUrl.trim())) {
         errs.externalTicketUrl = 'Enter a valid URL starting with http:// or https://';
       }
@@ -551,28 +589,15 @@ export function EventForm({ event, eventTypes, onSubmit, loading, onCancel }: Ev
 
   // Helper to convert YYYY-MM-DD to MM/DD/YYYY for display
   function formatDateForDisplay(dateStr: string): string {
-    if (!dateStr) return '';
-    // If already in MM/DD/YYYY format, return as is
-    if (dateStr.match(/^\d{2}\/\d{2}\/\d{4}$/)) return dateStr;
-    // Convert from YYYY-MM-DD to MM/DD/YYYY
-    const [year, month, day] = dateStr.split('-');
-    if (year && month && day) {
-      return `${month}/${day}/${year}`;
-    }
-    return dateStr;
+    const ymd = toDateOnlyYmd(dateStr);
+    if (!ymd) return dateStr;
+    const [year, month, day] = ymd.split('-');
+    return `${month}/${day}/${year}`;
   }
 
   // Helper to convert MM/DD/YYYY to YYYY-MM-DD for storage
   function formatDateForStorage(dateStr: string): string {
-    if (!dateStr) return '';
-    // If already in YYYY-MM-DD format, return as is
-    if (dateStr.match(/^\d{4}-\d{2}-\d{2}$/)) return dateStr;
-    // Convert from MM/DD/YYYY to YYYY-MM-DD
-    const [month, day, year] = dateStr.split('/');
-    if (year && month && day && year.length === 4 && month.length === 2 && day.length === 2) {
-      return `${year}-${month}-${day}`;
-    }
-    return dateStr;
+    return toDateOnlyYmd(dateStr) || dateStr;
   }
 
   // Helper to validate MM/DD/YYYY format (exactly 2 digits for month and day)
@@ -1648,11 +1673,15 @@ export function EventForm({ event, eventTypes, onSubmit, loading, onCancel }: Ev
         </div>
       </div>
 
-      {/* External ticket purchase URL (Zeffy, Eventbrite, etc.) */}
+      {/* External ticket purchase URL, or registration URL when Registration Required is on */}
       <div className="border-t border-gray-200 pt-6 mt-6 bg-gradient-to-br from-teal-50 via-cyan-50 to-sky-50 rounded-xl p-6 border border-teal-200/60 shadow-sm">
-        <h3 className="text-lg font-semibold mb-4 text-gray-800">External ticket purchase URL</h3>
+        <h3 className="text-lg font-semibold mb-4 text-gray-800">
+          {form.isRegistrationRequired ? 'External Registration URL' : 'External ticket purchase URL'}
+        </h3>
         <p className="text-sm text-gray-600 mb-4">
-          Send Buy Tickets to an external vendor (e.g. Zeffy) in a new tab. Set Admission type to &quot;Ticketed&quot;. Do not enable Event Cube at the same time.
+          {form.isRegistrationRequired
+            ? 'Send Register to an external vendor (e.g. Zeffy) in a new tab. Do not enable Event Cube at the same time.'
+            : 'Send Buy Tickets to an external vendor (e.g. Zeffy) in a new tab. Set Admission type to "Ticketed". Do not enable Event Cube at the same time.'}
         </p>
         <div className="space-y-4">
           <label className="flex items-center gap-3 cursor-pointer" htmlFor="useExternalTicketUrl">
@@ -1681,12 +1710,12 @@ export function EventForm({ event, eventTypes, onSubmit, loading, onCancel }: Ev
                 )}
               </span>
             </span>
-            <span className="font-medium text-gray-700">Use external ticket purchase URL</span>
+            <span className="font-medium text-gray-700">{form.isRegistrationRequired ? 'Use external registration URL' : 'Use external ticket purchase URL'}</span>
           </label>
           {useExternalTicketUrl && (
             <div>
               <label htmlFor="externalTicketUrl" className="block font-medium mb-1 text-gray-700">
-                External ticket URL *
+                {form.isRegistrationRequired ? 'External registration URL *' : 'External ticket URL *'}
               </label>
               <input
                 ref={(el) => { if (el) fieldRefs.current.externalTicketUrl = el; }}
@@ -1703,14 +1732,16 @@ export function EventForm({ event, eventTypes, onSubmit, loading, onCancel }: Ev
                     });
                   }
                 }}
-                placeholder="https://www.zeffy.com/en-US/ticketing/…"
+                placeholder={form.isRegistrationRequired ? 'https://www.zeffy.com/en-US/registration/…' : 'https://www.zeffy.com/en-US/ticketing/…'}
                 className={`w-full border rounded-xl focus:ring-blue-500 px-4 py-3 text-base ${errors.externalTicketUrl ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : 'border-gray-400 focus:border-blue-500'}`}
               />
               {errors.externalTicketUrl && (
                 <div className="text-red-500 text-sm mt-1">{errors.externalTicketUrl}</div>
               )}
               <p className="text-xs text-gray-500 mt-1">
-                Full URL to the vendor ticketing page. Buy Tickets opens this link in a new browser tab.
+                {form.isRegistrationRequired
+                  ? 'Full URL to the vendor registration page. Register opens this link in a new browser tab.'
+                  : 'Full URL to the vendor ticketing page. Buy Tickets opens this link in a new browser tab.'}
               </p>
             </div>
           )}
