@@ -1,5 +1,5 @@
 ---
-description: PostgreSQL export/import via database_export_import_refresh.bat — local Docker, VPC dev RDS, and VPC prod RDS (event_site_manager_db)
+description: PostgreSQL export/import via database_export_import_refresh.bat — local Docker, VPC dev RDS, and VPC prod RDS (kluvo_ai_db)
 globs: documentation/database_export_import/**/*
 alwaysApply: false
 ---
@@ -8,7 +8,7 @@ alwaysApply: false
 
 ## **Overview**
 
-Use the **`database_export_import_refresh.bat`** workflow to export `event_site_manager_db` from **local Docker Postgres**, prepare ordered INSERT SQL (with optional production Clerk user IDs), then apply **schema rebuild + data import + sequence sync** to:
+Use the **`database_export_import_refresh.bat`** workflow to export `kluvo_ai_db` from **local Docker Postgres**, prepare ordered INSERT SQL (with optional production Clerk user IDs), then apply **schema rebuild + data import + sequence sync** to:
 
 - **Local Docker** (dev Clerk IDs, renumbered PKs)
 - **VPC dev RDS** (`event-site-manager-dev-postgres...`, via `mosc-temp\.env.local`)
@@ -16,7 +16,7 @@ Use the **`database_export_import_refresh.bat`** workflow to export `event_site_
 
 **Canonical SQL/scripts** live under **`mosc-temp`** (`code_html_template/SQLS/`). This repo holds a **mirror copy** of the batch file and HTML runbook for reference.
 
-**Not in scope:** Liturgical calendar **readings** (`liturgy-days`) are in **Strapi**, not this Postgres export. Postgres includes `event_calendar_entry`, `official_document_category` (e.g. Panjangom/calendars), and the rest of `event_site_manager_db`.
+**Not in scope:** Liturgical calendar **readings** (`liturgy-days`) are in **Strapi**, not this Postgres export. Postgres includes `event_calendar_entry`, `official_document_category` (e.g. Panjangom/calendars), and the rest of `kluvo_ai_db`.
 
 ---
 
@@ -35,9 +35,9 @@ Related: [SEQUENCE_ID_ALIGNMENT_GUIDE.html](mdc:documentation/database_export_im
 
 ## **Prerequisites**
 
-- **Docker Desktop** running with local Postgres container (e.g. `event_site_manager_db-postgresql-1`, user `event_site_admin`, DB `event_site_manager_db`)
+- **Docker Desktop** running with local Postgres container (e.g. `kluvo_ai_db-postgresql-1`, user `event_site_admin`, DB `kluvo_ai_db`)
 - **Node.js** on `PATH` (reorder + PROD user-ID scripts)
-- **`WORKSPACE_ROOT`** = parent folder containing **`mosc-temp`** and **`event-site-manager-service`** (typically `F:\project_workspace`)
+- **`WORKSPACE_ROOT`** = parent folder containing **`mosc-temp`** and **`kluvo-ai-service`** (typically `F:\project_workspace`)
 - **Remote dev:** `mosc-temp\.env.local` with `RDS_ENDPOINT`, `DB_NAME`, `DB_USERNAME`, `DB_PASSWORD` (dev RDS host)
 - **Remote prod:** temporarily point remote config at prod RDS (see **Prod RDS** below) or use `database_target.local.env` fallback when `.env.local` is absent
 - **`psql`** on PATH **or** Docker (batch uses `postgres:16` image for remote `/REMOTE` steps)
@@ -94,7 +94,7 @@ cmd /c "echo PRODUCTION| F:\project_workspace\mosc-temp\code_html_template\batch
 Copy-Item F:\project_workspace\mosc-temp\.env.local F:\project_workspace\mosc-temp\.env.local.dev-backup-import -Force
 
 # 2) Set prod RDS_ENDPOINT / DB_* from Secrets Manager (do not commit passwords)
-$secretJson = aws secretsmanager get-secret-value --secret-id "event-site-manager/prod/rds/postgres" --region us-east-1 --query SecretString --output text | ConvertFrom-Json
+$secretJson = aws secretsmanager get-secret-value --secret-id "kluvo-ai/prod/rds/postgres" --region us-east-1 --query SecretString --output text | ConvertFrom-Json
 # Update RDS_ENDPOINT, DB_USERNAME, DB_PASSWORD, DB_NAME in .env.local (PowerShell line replace)
 
 # 3) Import
@@ -210,7 +210,7 @@ Do **not** ship an older `export.sql` / ordered / PROD file after media changes 
 
 ### **Canonical schema sync (best ongoing fix)**
 
-1. Ship Liquibase changelog in `event-site-manager-service`.
+1. Ship Liquibase changelog in `kluvo-ai-service`.
 2. **Same change set:** update `Event_Site_Manager_Latest_Schema.sql` (`CREATE TABLE` must include new columns — no lag).
 3. Export → guardrails → import. `pre-import` schema sync (`*`) catches the `show_header_*` class of bugs across all tables.
 
@@ -245,13 +245,13 @@ Do **not** ship an older `export.sql` / ordered / PROD file after media changes 
 
 ```env
 RDS_ENDPOINT=event-site-manager-dev-postgres.cwffi3ch4r75.us-east-1.rds.amazonaws.com
-DB_NAME=event_site_manager_db
+DB_NAME=kluvo_ai_db
 DB_USERNAME=postgres
 DB_PASSWORD=<secret>
 # Optional: DB_PORT=5432, DB_SSLMODE=require
 ```
 
-Prod host: `event-site-manager-prod-postgres.cwffi3ch4r75.us-east-1.rds.amazonaws.com` (Secrets Manager: `event-site-manager/prod/rds/postgres`).
+Prod host: `event-site-manager-prod-postgres.cwffi3ch4r75.us-east-1.rds.amazonaws.com` (Secrets Manager: `kluvo-ai/prod/rds/postgres`).
 
 ---
 
@@ -283,7 +283,7 @@ Database-only refresh **does not require ECS redeploy** — backend reads RDS di
 - ✅ After Liquibase column adds: update `Event_Site_Manager_Latest_Schema.sql` in the same change, then export/import
 - ✅ Verify calendar-related counts after local import if needed:
   ```powershell
-  docker exec CONTAINER_ID psql -U event_site_admin -d event_site_manager_db -c "SELECT COUNT(*) FROM event_calendar_entry;"
+  docker exec CONTAINER_ID psql -U event_site_admin -d kluvo_ai_db -c "SELECT COUNT(*) FROM event_calendar_entry;"
   ```
 
 ### **DON'T:**
