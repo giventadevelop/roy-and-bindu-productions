@@ -78,6 +78,10 @@ export default function AdminListSearchCombobox<T>({
         value={query}
         onChange={(e) => {
           const next = e.target.value;
+          if (!next.trim()) {
+            commit('');
+            return;
+          }
           setQuery(next);
           onCommit(next);
           setOpen(true);
