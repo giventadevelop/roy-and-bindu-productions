@@ -50,11 +50,20 @@ export default function AdminListSearchCombobox<T>({
     return () => document.removeEventListener('mousedown', onPointerDown);
   }, []);
 
-  const q = query.trim().toLowerCase();
+  const q = query.trim();
   const matches = (q
-    ? items.filter((item) =>
-        getSearchFields(item).some((field) => String(field ?? '').toLowerCase().includes(q))
-      )
+    ? items.filter((item) => {
+        const phrase = q.toLowerCase().replace(/-/g, ' ').replace(/\s+/g, ' ').trim();
+        const haystack = getSearchFields(item)
+          .map((field) => (field == null ? '' : String(field)))
+          .join(' ')
+          .toLowerCase()
+          .replace(/-/g, ' ')
+          .replace(/\s+/g, ' ');
+        const tokens = phrase.split(' ').filter((token) => token.length >= 2);
+        if (tokens.length === 0) return haystack.includes(phrase);
+        return tokens.every((token) => haystack.includes(token));
+      })
     : items
   ).slice(0, 8);
 
