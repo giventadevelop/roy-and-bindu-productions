@@ -313,13 +313,13 @@ const Footer = () => {
 
             <nav className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6" aria-label="Legal">
               <Link
-                href="#privacy"
+                href="/privacy"
                 className="text-gray-400 hover:text-white font-inter text-sm transition-colors duration-300 focus:outline-none focus:text-white"
               >
                 Privacy Policy
               </Link>
               <Link
-                href="#terms"
+                href="/terms"
                 className="text-gray-400 hover:text-white font-inter text-sm transition-colors duration-300 focus:outline-none focus:text-white"
               >
                 Terms of Service

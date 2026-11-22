@@ -144,6 +144,31 @@ export default function PrivacyPage() {
             </div>
           </section>
 
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Google AdSense and cookies</h2>
+            <div className="text-gray-700 space-y-3">
+              <p>
+                This site uses Google AdSense. Google and its advertising partners may use cookies to serve and measure ads.
+              </p>
+              <p>
+                The ownership script in the page head may be present before you choose. Ad units load only after you choose Accept.
+              </p>
+              <p>
+                You can control personalized ads in{' '}
+                <a href="https://adssettings.google.com" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                  Google Ads Settings
+                </a>
+                . Google&apos;s privacy policy is at{' '}
+                <a href="https://policies.google.com/privacy" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">
+                  policies.google.com/privacy
+                </a>
+                .
+              </p>
+            </div>
+          </section>
+
           <div className="border-t pt-6 mt-8">
             <p className="text-sm text-gray-500">
               This Privacy Policy explains how we collect, use, and protect your personal information. By using our services, you consent to the practices described in this policy.

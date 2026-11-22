@@ -375,6 +375,12 @@ export default async function RootLayout({
   return (
       <html lang="en" suppressHydrationWarning>
         <head>
+          <meta name="google-adsense-account" content="ca-pub-1016198353275904" />
+          <script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1016198353275904"
+            crossOrigin="anonymous"
+          />
           {/* Header Design System Fonts - DM Serif Display + Plus Jakarta Sans */}
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

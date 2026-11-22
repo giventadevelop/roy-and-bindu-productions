@@ -117,6 +117,16 @@ export default function TermsPage() {
             </div>
           </section>
 
+          </section>
+
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Third-party ads</h2>
+            <p className="text-gray-700 mb-4">
+              Third-party ads on this site are delivered by Google AdSense and are not offers from this organization.
+              See the <Link href="/privacy" className="text-blue-600 hover:underline">Privacy Policy</Link>.
+            </p>
+          </section>
+
           <section className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">11. Governing Law</h2>
             <p className="text-gray-700 mb-4">
